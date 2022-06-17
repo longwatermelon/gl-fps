@@ -17,7 +17,7 @@ Prog::Prog(GLFWwindow *w)
 
     m_cam = std::make_unique<Camera>(glm::vec3(0.f, 0.f, 5.f), glm::vec3(glm::radians(-90.f), 0.f, 0.f));
 
-    stbi_set_flip_vertically_on_load(true);
+    /* stbi_set_flip_vertically_on_load(true); */
 }
 
 
@@ -45,7 +45,7 @@ void Prog::mainloop()
         ), Attenuation(1.f, .09f, .032f))
     };
 
-    std::unique_ptr<Model> m = std::make_unique<Model>(glm::vec3(0.f, 0.f, 0.f), "res/backpack/backpack.obj");
+    std::unique_ptr<Model> m = std::make_unique<Model>(glm::vec3(0.f, 0.f, 0.f), "res/gun/Gun.obj");
 
     glEnable(GL_DEPTH_TEST);
 
@@ -69,8 +69,8 @@ void Prog::mainloop()
         lights[0].move(m_cam->pos());
         lights[0].spotlight_rotate(m_cam->front());
 
-        m->move(glm::vec3(0.f, 0.f, -.05f));
-        m->rotate(glm::radians(2.f), glm::vec3(.5f, 1.f, .5f));
+        /* m->move(glm::vec3(0.f, 0.f, -.05f)); */
+        /* m->rotate(glm::radians(2.f), glm::vec3(.5f, 1.f, .5f)); */
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
