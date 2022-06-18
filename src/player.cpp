@@ -36,6 +36,6 @@ void Player::rotate(glm::vec3 rot)
 
 void Player::update_weapon()
 {
-    m_gun.move(m_cam.pos() - m_gun.pos() + (m_cam.front() / 5.f) + (m_cam.right() / 15.f));
+    m_gun.move(m_cam.pos() - m_gun.pos() + (m_cam.front() / 10.f) + (m_cam.right() / 23.f) + (-m_cam.up() / 30.f));
 }
 

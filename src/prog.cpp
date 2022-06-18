@@ -14,7 +14,7 @@ Prog::Prog(GLFWwindow *w)
 {
     m_ri.shader = shader_create("shaders/basic_v.glsl", "shaders/basic_f.glsl");
     m_ri.view = glm::mat4(1.f);
-    m_ri.proj = glm::perspective(glm::radians(45.f), 800.f / 600.f, .1f, 100.f);
+    m_ri.proj = glm::perspective(glm::radians(45.f), 800.f / 600.f, .01f, 100.f);
 }
 
 
