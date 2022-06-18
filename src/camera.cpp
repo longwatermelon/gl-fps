@@ -35,26 +35,15 @@ void Camera::rotate(glm::vec3 rot)
 void Camera::update_vectors()
 {
     glm::vec3 front(1.f, 0.f, 0.f);
-    /* glm::quat qh(glm::vec3(0.f, m_rot.y, 0.f)); */
-    /* glm::quat qv(glm::vec3(0.f, 0.f, m_rot.z)); */
 
-    /* front = front * qh; */
-    /* front = qv * front; */
     glm::quat quat(m_rot);
     quat = glm::normalize(quat);
     front = quat * front;
 
     std::cout << glm::to_string(m_rot) << " | " << glm::to_string(quat) << "\n";
-    /* glm::vec3 front = { */
-    /*     cosf(m_rot.y) * cosf(m_rot.z), */
-    /*     sinf(m_rot.z), */
-    /*     sinf(m_rot.y) * cosf(m_rot.z) */
-    /* }; */
 
     glm::vec3 right = glm::cross(front, quat * glm::vec3(0.f, 1.f, 0.f));
     glm::vec3 up = glm::cross(right, front);
-
-    /* std::cout << glm::to_string(front) << "\n"; */
 
     m_front = glm::normalize(front);
     m_right = glm::normalize(right);

@@ -15,9 +15,6 @@ Prog::Prog(GLFWwindow *w)
     m_ri.shader = shader_create("shaders/basic_v.glsl", "shaders/basic_f.glsl");
     m_ri.view = glm::mat4(1.f);
     m_ri.proj = glm::perspective(glm::radians(45.f), 800.f / 600.f, .1f, 100.f);
-
-    /* m_player.rotate(glm::vec3(0.f, -glm::radians(90.f), 0.f)); */
-    std::cout << glm::to_string(m_player.cam().front()) << "\n";
 }
 
 
