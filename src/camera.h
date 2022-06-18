@@ -11,7 +11,7 @@ public:
     void rotate(glm::vec3 rot);
     void update_vectors();
 
-    void set_props(unsigned int shader);
+    void set_props(unsigned int shader) const;
 
     glm::vec3 pos() const { return m_pos; }
     glm::vec3 rot() const { return m_rot; }

@@ -40,9 +40,9 @@ Mesh::~Mesh()
 }
 
 
-void Mesh::render(RenderInfo *ri, glm::mat4 model)
+void Mesh::render(RenderInfo &ri, glm::mat4 model)
 {
-    glUseProgram(ri->shader);
+    glUseProgram(ri.shader);
 
     unsigned int diffuse_n = 1, specular_n = 1;
 
@@ -55,16 +55,16 @@ void Mesh::render(RenderInfo *ri, glm::mat4 model)
         size_t num = is_diffuse ? diffuse_n++ : specular_n++;
 
         std::string s = "material." + prop + std::to_string(num);
-        shader_int(ri->shader, s, i);
+        shader_int(ri.shader, s, i);
 
         glBindTexture(GL_TEXTURE_2D, m_textures[i]->id());
     }
 
-    shader_float(ri->shader, std::string("material.shininess"), 32.f);
+    shader_float(ri.shader, std::string("material.shininess"), 32.f);
 
-    shader_mat4(ri->shader, std::string("model"), &model[0][0]);
-    shader_mat4(ri->shader, std::string("view"), &ri->view[0][0]);
-    shader_mat4(ri->shader, std::string("projection"), &ri->proj[0][0]);
+    shader_mat4(ri.shader, std::string("model"), &model[0][0]);
+    shader_mat4(ri.shader, std::string("view"), &ri.view[0][0]);
+    shader_mat4(ri.shader, std::string("projection"), &ri.proj[0][0]);
 
     glBindVertexArray(m_vao);
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0);

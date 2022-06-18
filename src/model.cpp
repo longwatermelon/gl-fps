@@ -1,6 +1,7 @@
 #include "model.h"
 #include <filesystem>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -35,7 +36,7 @@ Model::~Model()
 }
 
 
-void Model::render(RenderInfo *ri)
+void Model::render(RenderInfo &ri)
 {
     glm::mat4 model = m_translation * m_rotation;
 
@@ -51,9 +52,11 @@ void Model::move(glm::vec3 dir)
 }
 
 
-void Model::rotate(float rad, glm::vec3 axis)
+void Model::rotate(glm::vec3 rot)
 {
-    m_rotation = glm::rotate(m_rotation, rad, axis);
+    m_rot += rot;
+    glm::quat quat(m_rot);
+    m_rotation = glm::mat4_cast(glm::normalize(quat));
 }
 
 

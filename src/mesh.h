@@ -18,7 +18,7 @@ public:
     Mesh(Mesh&&) = default;
     ~Mesh();
 
-    void render(RenderInfo *ri, glm::mat4 model);
+    void render(RenderInfo &ri, glm::mat4 model);
 
 private:
     std::vector<Vertex> m_verts;
