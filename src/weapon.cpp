@@ -27,6 +27,13 @@ void Weapon::update()
 }
 
 
+void Weapon::move(glm::vec3 dir)
+{
+    m_model.move(dir);
+    m_target_pos = m_model.pos();
+}
+
+
 void Weapon::set_target_pos(glm::vec3 pos)
 {
     m_target_pos = pos;

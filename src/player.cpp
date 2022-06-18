@@ -24,6 +24,7 @@ void Player::render(RenderInfo &ri)
 void Player::move(glm::vec3 dir)
 {
     m_cam.move(dir);
+    m_gun.move(dir);
 }
 
 

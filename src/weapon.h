@@ -14,6 +14,8 @@ public:
 
     void update();
 
+    void move(glm::vec3 dir);
+
     void set_target_pos(glm::vec3 pos);
     void set_target_rot(glm::vec3 rot);
 
