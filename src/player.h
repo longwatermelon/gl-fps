@@ -18,6 +18,8 @@ public:
 
     void update_weapon();
 
+    void scope(bool b) { m_scoped = b; }
+
     void set_vel(glm::vec3 vel) { m_vel = vel; }
 
     const Camera &cam() const { return m_cam; }
@@ -25,6 +27,7 @@ public:
 private:
     Camera m_cam;
     Weapon m_gun;
+    bool m_scoped;
 
     glm::vec3 m_vel;
 };
