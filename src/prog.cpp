@@ -15,6 +15,8 @@ Prog::Prog(GLFWwindow *w)
     m_ri.shader = shader_create("shaders/basic_v.glsl", "shaders/basic_f.glsl");
     m_ri.view = glm::mat4(1.f);
     m_ri.proj = glm::perspective(glm::radians(45.f), 800.f / 600.f, .01f, 100.f);
+
+    m_solids.emplace_back(Model(glm::vec3(0.f, 0.f, -15.f), "res/ground/untitled.obj"));
 }
 
 
@@ -51,9 +53,6 @@ void Prog::mainloop()
     double prev_mx, prev_my;
     glfwGetCursorPos(m_win, &prev_mx, &prev_my);
 
-    stbi_set_flip_vertically_on_load(true);
-    Model m(glm::vec3(5.f, 0.f, 0.f), "res/backpack/backpack.obj");
-
     while (!glfwWindowShouldClose(m_win))
     {
         events();
@@ -79,7 +78,8 @@ void Prog::mainloop()
         for (size_t i = 0; i < lights.size(); ++i)
             lights[i].set_props(m_ri.shader, i);
 
-        m.render(m_ri);
+        for (auto &s : m_solids)
+            s.render(m_ri);
 
         glClear(GL_DEPTH_BUFFER_BIT);
         m_player.render(m_ri);

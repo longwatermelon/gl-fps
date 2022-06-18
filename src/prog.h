@@ -20,5 +20,7 @@ private:
     RenderInfo m_ri;
 
     Player m_player;
+
+    std::vector<Model> m_solids;
 };
 
