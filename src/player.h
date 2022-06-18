@@ -2,6 +2,7 @@
 #include "camera.h"
 #include "model.h"
 #include "weapon.h"
+#include "light.h"
 #include <glm/glm.hpp>
 
 class Player
@@ -18,6 +19,8 @@ public:
 
     void update_weapon();
 
+    void set_props(unsigned int shader);
+
     void scope(bool b) { m_scoped = b; }
 
     void set_vel(glm::vec3 vel) { m_vel = vel; }
@@ -30,5 +33,7 @@ private:
     bool m_scoped;
 
     glm::vec3 m_vel;
+
+    Light m_light;
 };
 

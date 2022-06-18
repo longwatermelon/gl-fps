@@ -5,7 +5,12 @@
 
 
 Player::Player(glm::vec3 pos, glm::vec3 rot)
-    : m_cam(pos, rot), m_gun("res/gun/Gun.obj", pos, rot, 5.f), m_scoped(false), m_vel(0.f, 0.f, 0.f)
+    : m_cam(pos, rot), m_gun("res/gun/Gun.obj", pos, rot, 5.f), m_scoped(false), m_vel(0.f, 0.f, 0.f),
+      m_light(pos, Phong(
+        glm::vec3(.2f, .2f, .2f),
+        glm::vec3(.5f, .5f, .5f),
+        glm::vec3(1.f, 1.f, 1.f)
+      ), Attenuation(1.f, .009f, .0032f))
 {
 }
 
@@ -32,6 +37,7 @@ void Player::move(glm::vec3 dir)
 {
     m_cam.move(dir);
     m_gun.move(dir);
+    m_light.move(m_cam.pos());
 }
 
 
@@ -48,5 +54,12 @@ void Player::update_weapon()
         (-m_cam.up() / 3.f));
     m_gun.set_target_rot(m_cam.rot());
     m_gun.update();
+}
+
+
+void Player::set_props(unsigned int shader)
+{
+    m_cam.set_props(shader);
+    m_light.set_props(shader, 0);
 }
 

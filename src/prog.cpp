@@ -28,22 +28,6 @@ Prog::~Prog()
 
 void Prog::mainloop()
 {
-    std::vector<Light> lights = {
-        Light(glm::vec3(3.f, -1.f, 5.f), Phong(
-            glm::vec3(.2f, .2f, .2f),
-            glm::vec3(.5f, .5f, .5f),
-            glm::vec3(1.f, 1.f, 1.f)
-        ), Attenuation(1.f, .0009f, .00032f)),
-        Light(glm::vec3(3.f, -1.f, 5.f), Phong(
-            glm::vec3(.2f, .2f, .2f),
-            glm::vec3(.5f, .5f, .5f),
-            glm::vec3(1.f, 1.f, 1.f)
-        ), Attenuation(1.f, .09f, .032f)).make_spotlight(
-            glm::vec3(0.f, 0.f, -1.f),
-            cosf(glm::radians(14.5f)), cosf(glm::radians(20.5f))
-        )
-    };
-
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
@@ -64,19 +48,13 @@ void Prog::mainloop()
         prev_mx = mx;
         prev_my = my;
 
-        lights[0].move(m_player.cam().pos());
-        /* lights[0].spotlight_rotate(m_player.cam().front()); */
-
         m_player.update();
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         m_ri.view = glm::lookAt(m_player.cam().pos(), m_player.cam().pos() + m_player.cam().front(), m_player.cam().up());
-        m_player.cam().set_props(m_ri.shader);
-
-        for (size_t i = 0; i < lights.size(); ++i)
-            lights[i].set_props(m_ri.shader, i);
+        m_player.set_props(m_ri.shader);
 
         for (auto &s : m_solids)
             s.render(m_ri);
