@@ -69,7 +69,7 @@ void Model::rotate(glm::vec3 rot)
 }
 
 
-float Model::shortest_dist(glm::vec3 p)
+float Model::shortest_dist(glm::vec3 p) const
 {
     float t = INFINITY;
 

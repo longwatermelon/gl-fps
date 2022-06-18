@@ -48,7 +48,7 @@ void Prog::mainloop()
         prev_mx = mx;
         prev_my = my;
 
-        m_player.update();
+        m_player.update(m_solids);
         /* std::cout << m_solids[0].shortest_dist(m_player.cam().pos()) << "\n"; */
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -95,6 +95,7 @@ void Prog::events()
 
     m_player.scope(glfwGetMouseButton(m_win, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS);
 
-    m_player.set_vel(vec);
+    m_player.set_velx(vec.x);
+    m_player.set_velz(vec.z);
 }
 
