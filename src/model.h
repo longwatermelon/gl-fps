@@ -14,6 +14,8 @@ public:
     void move(glm::vec3 dir);
     void rotate(glm::vec3 rot);
 
+    float shortest_dist(glm::vec3 p);
+
     void process_node(aiNode *node, const aiScene *sc);
     std::unique_ptr<Mesh> process_mesh(aiMesh *mesh, const aiScene *sc);
 

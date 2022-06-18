@@ -49,6 +49,9 @@ void Model::move(glm::vec3 dir)
 {
     m_translation = glm::translate(m_translation, dir);
     m_pos += dir;
+
+    for (auto &m : m_meshes)
+        m->update_pos(m_pos);
 }
 
 
@@ -60,6 +63,25 @@ void Model::rotate(glm::vec3 rot)
 
     glm::quat quat = glm::normalize(yaw * pitch);
     m_rotation = glm::mat4_cast(quat);
+
+    for (auto &m : m_meshes)
+        m->update_rot(m_rot);
+}
+
+
+float Model::shortest_dist(glm::vec3 p)
+{
+    float t = INFINITY;
+
+    for (auto &m : m_meshes)
+    {
+        float dist = m->shortest_dist(p);
+
+        if (dist < t)
+            t = dist;
+    }
+
+    return t;
 }
 
 

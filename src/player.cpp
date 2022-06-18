@@ -41,6 +41,32 @@ void Player::move(glm::vec3 dir)
 }
 
 
+void Player::move(glm::vec3 dir, const std::vector<Model> &solids)
+{
+    glm::vec3 x(dir.x, 0.f, 0.f);
+    glm::vec3 y(0.f, dir.y, 0.f);
+    glm::vec3 z(0.f, 0.f, dir.z);
+}
+
+
+bool Player::move_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist)
+{
+    if (check_dir(dir, solids, min_dist))
+    {
+        move(dir);
+        return true;
+    }
+
+    return false;
+}
+
+
+bool Player::check_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist)
+{
+    return false;
+}
+
+
 void Player::rotate(glm::vec3 rot)
 {
     m_cam.rotate(rot);

@@ -1,4 +1,5 @@
 #include "mesh.h"
+#include "util.h"
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
 
@@ -71,5 +72,67 @@ void Mesh::render(RenderInfo &ri, glm::mat4 model)
     glBindVertexArray(0);
 
     glActiveTexture(GL_TEXTURE0);
+}
+
+
+float Mesh::shortest_dist(glm::vec3 p)
+{
+    float t = INFINITY;
+
+    for (size_t i = 0; i < m_indices.size(); i += 3)
+    {
+        std::array<glm::vec3, 3> pts = {
+            m_verts[m_indices[i]].pos,
+            m_verts[m_indices[i + 1]].pos,
+            m_verts[m_indices[i + 2]].pos
+        };
+
+        float dist = shortest_dist_tri(pts, p);
+
+        if (dist < t)
+            t = dist;
+    }
+
+    return t;
+}
+
+
+float Mesh::shortest_dist_tri(std::array<glm::vec3, 3> pts, glm::vec3 p)
+{
+    float t = INFINITY;
+
+    glm::vec3 a = m_pos + pts[0];
+    glm::vec3 b = m_pos + pts[1];
+    glm::vec3 c = m_pos + pts[2];
+
+    glm::vec3 norm = glm::cross(c - a, b - a);
+    t = std::abs(glm::dot(a - p, norm));
+
+    std::array<glm::vec3, 3> points = { a, b, c };
+    glm::vec3 coefficients = util::barycentric_coeffs(points, p + norm * t);
+
+    int negatives = 0;
+    if (coefficients.x < 0.f) ++negatives;
+    if (coefficients.y < 0.f) ++negatives;
+    if (coefficients.z < 0.f) ++negatives;
+
+    if (negatives == 0)
+    {
+        return t;
+    }
+    else if (negatives == 1)
+    {
+        if (coefficients.x < 0.f) return util::point_line_shortest_dist(p, points[1], points[2]);
+        if (coefficients.y < 0.f) return util::point_line_shortest_dist(p, points[0], points[2]);
+        if (coefficients.z < 0.f) return util::point_line_shortest_dist(p, points[0], points[1]);
+    }
+    else
+    {
+        if (coefficients.x >= 0.f) return glm::length(points[0] - p);
+        if (coefficients.y >= 0.f) return glm::length(points[1] - p);
+        if (coefficients.z >= 0.f) return glm::length(points[2] - p);
+    }
+
+    return t;
 }
 

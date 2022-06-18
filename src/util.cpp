@@ -46,3 +46,46 @@ glm::vec3 util::restrict_cam_angle(glm::vec3 angle)
     return glm::radians(deg);
 }
 
+
+glm::vec3 util::barycentric_coeffs(std::array<glm::vec3, 3> points, glm::vec3 p)
+{
+    glm::vec3 ba = points[1] - points[0];
+    glm::vec3 ca = points[2] - points[0];
+
+    glm::vec3 pa = p - points[0];
+    glm::vec3 pb = p - points[1];
+    glm::vec3 pc = p - points[2];
+
+    glm::vec3 n = glm::cross(ba, ca);
+    float s_abc = glm::length(n);
+    n = glm::normalize(n);
+
+    glm::vec3 pbc = glm::cross(pb, pc);
+    float s_pbc = glm::dot(n, pbc);
+
+    glm::vec3 apc = glm::cross(pa, ca);
+    float s_apc = glm::dot(n, apc);
+
+    glm::vec3 abp = glm::cross(ba, pa);
+    float s_abp = glm::dot(n, abp);
+
+    return glm::vec3(
+        s_pbc / s_abc,
+        s_apc / s_abc,
+        s_abp / s_abc
+    );
+}
+
+
+float util::point_line_shortest_dist(glm::vec3 p, glm::vec3 p0, glm::vec3 p1)
+{
+    float len = glm::length(p1 - p0);
+    float t = glm::dot(p1 - p0, p - p0) / len;
+
+    if (t < 0.f) return glm::length(p - p0);
+    if (t > len) return glm::length(p - p1);
+
+    float h = glm::length(p - p0);
+    return sqrtf(h * h - t * t);
+}
+

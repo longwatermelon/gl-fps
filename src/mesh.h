@@ -3,6 +3,7 @@
 #include "render.h"
 #include <vector>
 #include <memory>
+#include <array>
 #include <glm/glm.hpp>
 
 struct Vertex
@@ -20,7 +21,15 @@ public:
 
     void render(RenderInfo &ri, glm::mat4 model);
 
+    float shortest_dist(glm::vec3 p);
+    float shortest_dist_tri(std::array<glm::vec3, 3> pts, glm::vec3 p);
+
+    void update_pos(glm::vec3 pos) { m_pos = pos; }
+    void update_rot(glm::vec3 rot) { m_rot = rot; }
+
 private:
+    glm::vec3 m_pos, m_rot;
+
     std::vector<Vertex> m_verts;
     std::vector<unsigned int> m_indices;
     std::vector<Texture*> m_textures;

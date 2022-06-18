@@ -49,6 +49,7 @@ void Prog::mainloop()
         prev_my = my;
 
         m_player.update();
+        /* std::cout << m_solids[0].shortest_dist(m_player.cam().pos()) << "\n"; */
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
