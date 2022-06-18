@@ -5,7 +5,7 @@
 
 
 Player::Player(glm::vec3 pos, glm::vec3 rot)
-    : m_cam(pos, rot), m_gun(pos, "res/gun/Gun.obj")
+    : m_cam(pos, rot), m_gun("res/gun/Gun.obj", pos, rot, 5.f)
 {
 }
 
@@ -30,12 +30,13 @@ void Player::move(glm::vec3 dir)
 void Player::rotate(glm::vec3 rot)
 {
     m_cam.rotate(rot);
-    m_gun.rotate(rot);
 }
 
 
 void Player::update_weapon()
 {
-    m_gun.move(m_cam.pos() - m_gun.pos() + (m_cam.front() / 10.f) + (m_cam.right() / 23.f) + (-m_cam.up() / 30.f));
+    m_gun.set_target_pos(m_cam.pos() + m_cam.front() + (m_cam.right() / 2.f) + (-m_cam.up() / 3.f));
+    m_gun.set_target_rot(m_cam.rot());
+    m_gun.update();
 }
 

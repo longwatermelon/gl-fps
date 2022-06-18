@@ -55,8 +55,11 @@ void Model::move(glm::vec3 dir)
 void Model::rotate(glm::vec3 rot)
 {
     m_rot += rot;
-    glm::quat quat(m_rot);
-    m_rotation = glm::mat4_cast(glm::normalize(quat));
+    glm::quat yaw(glm::vec3(0.f, m_rot.y, 0.f));
+    glm::quat pitch(glm::vec3(0.f, 0.f, m_rot.z));
+
+    glm::quat quat = glm::normalize(yaw * pitch);
+    m_rotation = glm::mat4_cast(quat);
 }
 
 

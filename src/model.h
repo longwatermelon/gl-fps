@@ -19,6 +19,7 @@ public:
     std::vector<Texture*> load_mat_textures(aiMaterial *mat, aiTextureType type, TextureType ttype);
 
     glm::vec3 pos() const { return m_pos; }
+    glm::vec3 rot() const { return m_rot; }
 
 private:
     glm::vec3 m_pos, m_rot;

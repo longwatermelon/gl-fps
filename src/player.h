@@ -1,6 +1,7 @@
 #pragma once
 #include "camera.h"
 #include "model.h"
+#include "weapon.h"
 #include <glm/glm.hpp>
 
 class Player
@@ -20,6 +21,6 @@ public:
 
 private:
     Camera m_cam;
-    Model m_gun;
+    Weapon m_gun;
 };
 
