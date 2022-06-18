@@ -10,9 +10,8 @@ public:
     Weapon(const std::string &path, glm::vec3 pos, glm::vec3 rot, float divisor);
     ~Weapon();
 
-    void render(RenderInfo &ri);
-
     void update();
+    void render(RenderInfo &ri);
 
     void move(glm::vec3 dir);
 

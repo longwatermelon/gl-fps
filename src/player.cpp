@@ -15,16 +15,16 @@ Player::~Player()
 }
 
 
-void Player::render(RenderInfo &ri)
-{
-    m_gun.render(ri);
-}
-
-
 void Player::update()
 {
     move(m_vel);
     update_weapon();
+}
+
+
+void Player::render(RenderInfo &ri)
+{
+    m_gun.render(ri);
 }
 
 

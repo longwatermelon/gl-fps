@@ -14,16 +14,16 @@ Weapon::~Weapon()
 }
 
 
-void Weapon::render(RenderInfo &ri)
-{
-    m_model.render(ri);
-}
-
-
 void Weapon::update()
 {
     m_model.move((m_target_pos - m_model.pos()) / m_divisor);
     m_model.rotate((m_target_rot - m_model.rot()) / m_divisor);
+}
+
+
+void Weapon::render(RenderInfo &ri)
+{
+    m_model.render(ri);
 }
 
 

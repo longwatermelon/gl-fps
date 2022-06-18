@@ -10,9 +10,8 @@ public:
     Player(glm::vec3 pos, glm::vec3 rot);
     ~Player();
 
-    void render(RenderInfo &ri);
-
     void update();
+    void render(RenderInfo &ri);
 
     void move(glm::vec3 dir);
     void rotate(glm::vec3 rot);
