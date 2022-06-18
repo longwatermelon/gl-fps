@@ -22,7 +22,6 @@ void Weapon::render(RenderInfo &ri)
 
 void Weapon::update()
 {
-    std::cout << glm::to_string(m_target_rot - m_model.rot()) << "\n";
     m_model.move((m_target_pos - m_model.pos()) / m_divisor);
     m_model.rotate((m_target_rot - m_model.rot()) / m_divisor);
 }
