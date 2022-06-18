@@ -85,8 +85,11 @@ void Prog::events()
     if (glfwGetKey(m_win, GLFW_KEY_A) == GLFW_PRESS) vec -= right;
     if (glfwGetKey(m_win, GLFW_KEY_D) == GLFW_PRESS) vec += right;
 
-    if (glfwGetKey(m_win, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) vec += glm::vec3(0.f, -move, 0.f);
-    if (glfwGetKey(m_win, GLFW_KEY_SPACE) == GLFW_PRESS) vec += glm::vec3(0.f, move, 0.f);
+    if (glfwGetKey(m_win, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+        if (std::abs(m_player.vel().y) < .01f)
+            m_player.set_vely(.3f);
+    }
 
     if (glfwGetKey(m_win, GLFW_KEY_LEFT) == GLFW_PRESS) m_player.rotate(glm::vec3(-rot, 0.f, 0.f));
     if (glfwGetKey(m_win, GLFW_KEY_RIGHT) == GLFW_PRESS) m_player.rotate(glm::vec3(rot, 0.f, 0.f));

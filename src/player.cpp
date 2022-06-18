@@ -69,7 +69,7 @@ bool Player::move_dir(glm::vec3 dir, const std::vector<Model> &solids, float min
         float dist;
         check_dir(glm::vec3(0.f, 0.f, 0.f), solids, min_dist, &dist);
 
-        float diff = dist - min_dist;
+        float diff = t - min_dist;
         move(glm::normalize(dir) * diff);
         return false;
     }

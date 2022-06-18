@@ -31,6 +31,8 @@ public:
     void set_vely(float y) { m_vel.y = y; }
     void set_velz(float z) { m_vel.z = z; }
 
+    glm::vec3 vel() const { return m_vel; }
+
     const Camera &cam() const { return m_cam; }
 
 private:
