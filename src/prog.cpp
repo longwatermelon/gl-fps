@@ -114,10 +114,7 @@ void Prog::events()
     if (glfwGetKey(m_win, GLFW_KEY_UP) == GLFW_PRESS) m_player.rotate(glm::vec3(0.f, rot, 0.f));
     if (glfwGetKey(m_win, GLFW_KEY_DOWN) == GLFW_PRESS) m_player.rotate(glm::vec3(0.f, -rot, 0.f));
 
-    if (glfwGetMouseButton(m_win, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
-        m_player.scope(true);
-    else
-        m_player.scope(false);
+    m_player.scope(glfwGetMouseButton(m_win, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS);
 
     m_player.set_vel(vec);
 }
