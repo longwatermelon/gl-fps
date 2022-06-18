@@ -87,7 +87,8 @@ void Prog::events()
 
     if (glfwGetKey(m_win, GLFW_KEY_SPACE) == GLFW_PRESS)
     {
-        if (std::abs(m_player.vel().y) < .01f)
+        /* if (std::abs(m_player.vel().y) < .01f) */
+        if (m_player.vel().y == 0.f)
             m_player.set_vely(.3f);
     }
 

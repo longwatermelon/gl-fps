@@ -69,16 +69,20 @@ void Model::rotate(glm::vec3 rot)
 }
 
 
-float Model::shortest_dist(glm::vec3 p) const
+float Model::shortest_dist(glm::vec3 p, glm::vec3 *norm) const
 {
     float t = INFINITY;
 
     for (auto &m : m_meshes)
     {
-        float dist = m->shortest_dist(p);
+        glm::vec3 n;
+        float dist = m->shortest_dist(p, &n);
 
         if (dist < t)
+        {
             t = dist;
+            *norm = n;
+        }
     }
 
     return t;

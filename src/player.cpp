@@ -58,32 +58,35 @@ void Player::move(glm::vec3 dir, const std::vector<Model> &solids)
 bool Player::move_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist)
 {
     float t;
+    glm::vec3 norm;
 
-    if (check_dir(dir, solids, min_dist, &t))
+    if (check_dir(dir, solids, min_dist, &t, &norm))
     {
         move(dir);
         return true;
     }
     else
     {
-        float dist;
-        check_dir(glm::vec3(0.f, 0.f, 0.f), solids, min_dist, &dist);
-
+        /* float dist; */
+        /* check_dir(glm::vec3(0.f, 0.f, 0.f), solids, min_dist, &dist); */
         float diff = t - min_dist;
+        if (glm::dot(glm::normalize(dir), norm) < 0.f)
+            diff *= -1.f;
+
         move(glm::normalize(dir) * diff);
         return false;
     }
 }
 
 
-bool Player::check_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist, float *t)
+bool Player::check_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist, float *t, glm::vec3 *norm)
 {
     *t = INFINITY;
     glm::vec3 moved = m_cam.pos() + dir;
 
     for (auto &s : solids)
     {
-        float dist = s.shortest_dist(moved);
+        float dist = s.shortest_dist(moved, norm);
 
         if (dist < *t)
             *t = dist;

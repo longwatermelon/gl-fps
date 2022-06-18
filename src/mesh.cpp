@@ -75,7 +75,7 @@ void Mesh::render(RenderInfo &ri, glm::mat4 model)
 }
 
 
-float Mesh::shortest_dist(glm::vec3 p)
+float Mesh::shortest_dist(glm::vec3 p, glm::vec3 *norm)
 {
     float t = INFINITY;
 
@@ -87,17 +87,21 @@ float Mesh::shortest_dist(glm::vec3 p)
             m_verts[m_indices[i + 2]].pos
         };
 
-        float dist = shortest_dist_tri(pts, p);
+        glm::vec3 n;
+        float dist = shortest_dist_tri(pts, p, &n);
 
         if (dist < t)
+        {
             t = dist;
+            *norm = n;
+        }
     }
 
     return t;
 }
 
 
-float Mesh::shortest_dist_tri(std::array<glm::vec3, 3> pts, glm::vec3 p)
+float Mesh::shortest_dist_tri(std::array<glm::vec3, 3> pts, glm::vec3 p, glm::vec3 *norm)
 {
     float t = INFINITY;
 
@@ -105,11 +109,11 @@ float Mesh::shortest_dist_tri(std::array<glm::vec3, 3> pts, glm::vec3 p)
     glm::vec3 b = m_pos + pts[1];
     glm::vec3 c = m_pos + pts[2];
 
-    glm::vec3 norm = glm::cross(c - a, b - a);
-    t = std::abs(glm::dot(a - p, norm));
+    *norm = glm::cross(c - a, b - a);
+    t = std::abs(glm::dot(a - p, *norm));
 
     std::array<glm::vec3, 3> points = { a, b, c };
-    glm::vec3 coefficients = util::barycentric_coeffs(points, p + norm * t);
+    glm::vec3 coefficients = util::barycentric_coeffs(points, p + *norm * t);
 
     int negatives = 0;
     if (coefficients.x < 0.f) ++negatives;

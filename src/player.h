@@ -17,7 +17,7 @@ public:
     void move(glm::vec3 dir);
     void move(glm::vec3 dir, const std::vector<Model> &solids);
     bool move_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist);
-    bool check_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist, float *t);
+    bool check_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist, float *t, glm::vec3 *norm);
 
     void rotate(glm::vec3 rot);
 
