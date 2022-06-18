@@ -68,7 +68,7 @@ void Prog::mainloop()
         lights[0].move(m_player.cam().pos());
         /* lights[0].spotlight_rotate(m_player.cam().front()); */
 
-        m_player.update_weapon();
+        m_player.update();
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -101,13 +101,15 @@ void Prog::events()
     glm::vec3 right = m_player.cam().right() * move;
     right[1] = 0.f;
 
-    if (glfwGetKey(m_win, GLFW_KEY_W) == GLFW_PRESS) m_player.move(front);
-    if (glfwGetKey(m_win, GLFW_KEY_S) == GLFW_PRESS) m_player.move(-front);
-    if (glfwGetKey(m_win, GLFW_KEY_A) == GLFW_PRESS) m_player.move(-right);
-    if (glfwGetKey(m_win, GLFW_KEY_D) == GLFW_PRESS) m_player.move(right);
+    glm::vec3 vec(0.f, 0.f, 0.f);
 
-    if (glfwGetKey(m_win, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) m_player.move(glm::vec3(0.f, -move, 0.f));
-    if (glfwGetKey(m_win, GLFW_KEY_SPACE) == GLFW_PRESS) m_player.move(glm::vec3(0.f, move, 0.f));
+    if (glfwGetKey(m_win, GLFW_KEY_W) == GLFW_PRESS) vec += front;
+    if (glfwGetKey(m_win, GLFW_KEY_S) == GLFW_PRESS) vec -= front;
+    if (glfwGetKey(m_win, GLFW_KEY_A) == GLFW_PRESS) vec -= right;
+    if (glfwGetKey(m_win, GLFW_KEY_D) == GLFW_PRESS) vec += right;
+
+    if (glfwGetKey(m_win, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) vec += glm::vec3(0.f, -move, 0.f);
+    if (glfwGetKey(m_win, GLFW_KEY_SPACE) == GLFW_PRESS) vec += glm::vec3(0.f, move, 0.f);
 
     if (glfwGetKey(m_win, GLFW_KEY_LEFT) == GLFW_PRESS)
         m_player.rotate(glm::vec3(-rot, 0.f, 0.f));
@@ -120,5 +122,7 @@ void Prog::events()
 
     if (glfwGetKey(m_win, GLFW_KEY_DOWN) == GLFW_PRESS)
         m_player.rotate(glm::vec3(0.f, -rot, 0.f));
+
+    m_player.set_vel(vec);
 }
 

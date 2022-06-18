@@ -5,7 +5,7 @@
 
 
 Player::Player(glm::vec3 pos, glm::vec3 rot)
-    : m_cam(pos, rot), m_gun("res/gun/Gun.obj", pos, rot, 5.f)
+    : m_cam(pos, rot), m_gun("res/gun/Gun.obj", pos, rot, 5.f), m_vel(0.f, 0.f, 0.f)
 {
 }
 
@@ -18,6 +18,13 @@ Player::~Player()
 void Player::render(RenderInfo &ri)
 {
     m_gun.render(ri);
+}
+
+
+void Player::update()
+{
+    move(m_vel);
+    update_weapon();
 }
 
 
