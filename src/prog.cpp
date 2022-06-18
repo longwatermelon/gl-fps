@@ -92,14 +92,12 @@ void Prog::mainloop()
 
 void Prog::events()
 {
-    float move = .05f;
+    float move = .2f;
     float rot = 2.f;
 
-    glm::vec3 front = m_player.cam().front() * move;
-    front[1] = 0.f;
-
-    glm::vec3 right = m_player.cam().right() * move;
-    right[1] = 0.f;
+    glm::quat yaw(glm::vec3(0.f, m_player.cam().rot().y, 0.f));
+    glm::vec3 front = yaw * glm::vec3(1.f, 0.f, 0.f) * move;
+    glm::vec3 right = yaw * glm::vec3(0.f, 0.f, 1.f) * move;
 
     glm::vec3 vec(0.f, 0.f, 0.f);
 
