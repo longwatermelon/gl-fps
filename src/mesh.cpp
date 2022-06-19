@@ -109,7 +109,7 @@ float Mesh::shortest_dist_tri(std::array<glm::vec3, 3> pts, glm::vec3 p, glm::ve
     glm::vec3 b = m_pos + pts[1];
     glm::vec3 c = m_pos + pts[2];
 
-    *norm = glm::cross(c - a, b - a);
+    *norm = glm::normalize(glm::cross(c - a, b - a));
     t = std::abs(glm::dot(a - p, *norm));
 
     std::array<glm::vec3, 3> points = { a, b, c };
