@@ -49,7 +49,6 @@ void Prog::mainloop()
         prev_my = my;
 
         m_player.update(m_solids);
-        /* std::cout << m_solids[0].shortest_dist(m_player.cam().pos()) << "\n"; */
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -74,6 +73,9 @@ void Prog::events()
     float move = .2f;
     float rot = 2.f;
 
+    if (m_player.scoped())
+        move *= .5f;
+
     glm::quat yaw(glm::vec3(0.f, m_player.cam().rot().y, 0.f));
     glm::vec3 front = yaw * glm::vec3(1.f, 0.f, 0.f) * move;
     glm::vec3 right = yaw * glm::vec3(0.f, 0.f, 1.f) * move;
@@ -87,7 +89,6 @@ void Prog::events()
 
     if (glfwGetKey(m_win, GLFW_KEY_SPACE) == GLFW_PRESS)
     {
-        /* if (std::abs(m_player.vel().y) < .01f) */
         if (m_player.vel().y == 0.f)
             m_player.set_vely(.3f);
     }

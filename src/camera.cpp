@@ -46,10 +46,6 @@ void Camera::update_vectors()
     glm::quat quat = glm::normalize(yaw * pitch);
     front = quat * front;
 
-    /* glm::quat quat(m_rot); */
-    /* quat = glm::normalize(quat); */
-    /* front = quat * front; */
-
     glm::vec3 right = glm::cross(front, quat * glm::vec3(0.f, 1.f, 0.f));
     glm::vec3 up = glm::cross(right, front);
 

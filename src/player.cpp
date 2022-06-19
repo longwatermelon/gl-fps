@@ -10,7 +10,7 @@ Player::Player(glm::vec3 pos, glm::vec3 rot)
         glm::vec3(.2f, .2f, .2f),
         glm::vec3(.5f, .5f, .5f),
         glm::vec3(1.f, 1.f, 1.f)
-      ), Attenuation(1.f, .009f, .0032f))
+      ), Attenuation(1.f, .00009f, .000032f))
 {
 }
 

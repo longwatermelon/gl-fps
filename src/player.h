@@ -35,6 +35,8 @@ public:
 
     const Camera &cam() const { return m_cam; }
 
+    bool scoped() const { return m_scoped; }
+
 private:
     Camera m_cam;
     Weapon m_gun;
