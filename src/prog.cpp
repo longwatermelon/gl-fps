@@ -10,7 +10,7 @@
 
 
 Prog::Prog(GLFWwindow *w)
-    : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f)), m_crosshair_tex("res/crosshair.png", TextureType::DIFFUSE)
+    : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f))
 {
     m_ri.add_shader("basic");
     m_ri.add_shader("white");

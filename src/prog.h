@@ -26,7 +26,5 @@ private:
 
     std::vector<Model> m_solids;
     std::vector<Enemy> m_enemies;
-
-    Texture m_crosshair_tex;
 };
 
