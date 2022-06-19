@@ -27,7 +27,11 @@ Model::Model(glm::vec3 pos, const std::string &path)
     m_translation = glm::mat4(1.f);
     m_rotation = glm::mat4(1.f);
 
+    m_pos = glm::vec3(0.f, 0.f, 0.f);
+    m_rot = glm::vec3(0.f, 0.f, 0.f);
+
     move(pos);
+    rotate(m_rot);
 }
 
 

@@ -10,9 +10,11 @@
 
 
 Prog::Prog(GLFWwindow *w)
-    : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f))
+    : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f)), m_crosshair_tex("res/crosshair.png", TextureType::DIFFUSE)
 {
     m_ri.add_shader("basic");
+    m_ri.add_shader("white");
+
     m_ri.view = glm::mat4(1.f);
     m_ri.proj = glm::perspective(glm::radians(45.f), 800.f / 600.f, .01f, 1000.f);
 
@@ -38,6 +40,7 @@ void Prog::mainloop()
     double prev_mx, prev_my;
     glfwGetCursorPos(m_win, &prev_mx, &prev_my);
 
+
     while (!glfwWindowShouldClose(m_win))
     {
         events();
@@ -57,6 +60,7 @@ void Prog::mainloop()
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        glUseProgram(m_ri.shaders["basic"]);
         m_ri.view = glm::lookAt(m_player.cam().pos(), m_player.cam().pos() + m_player.cam().front(), m_player.cam().up());
         m_player.set_props(m_ri.shaders["basic"]);
 
@@ -68,6 +72,8 @@ void Prog::mainloop()
 
         glClear(GL_DEPTH_BUFFER_BIT);
         m_player.render(m_ri);
+
+        draw_crosshair();
 
         glfwSwapBuffers(m_win);
         glfwPollEvents();
@@ -109,5 +115,41 @@ void Prog::events()
 
     m_player.set_velx(vec.x);
     m_player.set_velz(vec.z);
+}
+
+
+void Prog::draw_crosshair()
+{
+    float verts[] = {
+        400.f, 305.f,
+        400.f, 295.f,
+        395.f, 300.f,
+        405.f, 300.f
+    };
+
+    for (size_t i = 0; i < sizeof(verts) / sizeof(float); i += 2)
+    {
+        verts[i] = (verts[i] / 400.f - 1.f) * 1.5f;
+        verts[i + 1] = (verts[i + 1] / 300.f - 1.f) * 1.5f;
+    }
+
+    unsigned int vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    unsigned int vb;
+    glGenBuffers(1, &vb);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vb);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
+    glEnableVertexAttribArray(0);
+
+    glUseProgram(m_ri.shaders["white"]);
+    glDrawArrays(GL_LINES, 0, 4);
+
+    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, &vb);
 }
 
