@@ -16,7 +16,7 @@ Prog::Prog(GLFWwindow *w)
     m_ri.view = glm::mat4(1.f);
     m_ri.proj = glm::perspective(glm::radians(45.f), 800.f / 600.f, .01f, 100.f);
 
-    m_solids.emplace_back(Model(glm::vec3(0.f, 0.f, -15.f), "res/ground/untitled.obj"));
+    m_solids.emplace_back(Model(glm::vec3(0.f, -100.f, -40.f), "res/ground/untitled.obj"));
 }
 
 
