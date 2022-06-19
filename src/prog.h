@@ -2,6 +2,7 @@
 #include "render.h"
 #include "camera.h"
 #include "player.h"
+#include "enemy.h"
 #include <memory>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -22,5 +23,6 @@ private:
     Player m_player;
 
     std::vector<Model> m_solids;
+    std::vector<Enemy> m_enemies;
 };
 

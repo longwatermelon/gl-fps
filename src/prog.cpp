@@ -10,13 +10,14 @@
 
 
 Prog::Prog(GLFWwindow *w)
-    : m_win(w), m_player(glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 0.f, 0.f))
+    : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f))
 {
     m_ri.shader = shader_create("shaders/basic_v.glsl", "shaders/basic_f.glsl");
     m_ri.view = glm::mat4(1.f);
     m_ri.proj = glm::perspective(glm::radians(45.f), 800.f / 600.f, .01f, 100.f);
 
-    m_solids.emplace_back(Model(glm::vec3(0.f, -100.f, -40.f), "res/ground/untitled.obj"));
+    m_solids.emplace_back(Model(glm::vec3(0.f, 0.f, -40.f), "res/ground/untitled.obj"));
+    m_enemies.emplace_back(Enemy(glm::vec3(0.f, 50.f, 0.f), "res/enemy/enemy.obj"));
 }
 
 
@@ -50,6 +51,9 @@ void Prog::mainloop()
 
         m_player.update(m_solids);
 
+        for (auto &e : m_enemies)
+            e.update();
+
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -58,6 +62,9 @@ void Prog::mainloop()
 
         for (auto &s : m_solids)
             s.render(m_ri);
+
+        for (auto &e : m_enemies)
+            e.render(m_ri);
 
         glClear(GL_DEPTH_BUFFER_BIT);
         m_player.render(m_ri);
