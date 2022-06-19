@@ -12,7 +12,7 @@
 Prog::Prog(GLFWwindow *w)
     : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f))
 {
-    m_ri.shader = shader_create("shaders/basic_v.glsl", "shaders/basic_f.glsl");
+    m_ri.add_shader("basic");
     m_ri.view = glm::mat4(1.f);
     m_ri.proj = glm::perspective(glm::radians(45.f), 800.f / 600.f, .01f, 1000.f);
 
@@ -23,7 +23,7 @@ Prog::Prog(GLFWwindow *w)
 
 Prog::~Prog()
 {
-    glDeleteShader(m_ri.shader);
+    m_ri.clear_shaders();
 }
 
 
@@ -58,7 +58,7 @@ void Prog::mainloop()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         m_ri.view = glm::lookAt(m_player.cam().pos(), m_player.cam().pos() + m_player.cam().front(), m_player.cam().up());
-        m_player.set_props(m_ri.shader);
+        m_player.set_props(m_ri.shaders["basic"]);
 
         for (auto &s : m_solids)
             s.render(m_ri);
