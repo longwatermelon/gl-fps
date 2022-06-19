@@ -29,7 +29,7 @@ void Player::update(const std::vector<Model> &solids)
 }
 
 
-void Player::render(RenderInfo &ri)
+void Player::render(RenderInfo &ri) const
 {
     m_gun.render(ri);
 }
@@ -78,7 +78,7 @@ bool Player::move_dir(glm::vec3 dir, const std::vector<Model> &solids, float min
 }
 
 
-bool Player::check_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist, float *t, glm::vec3 *norm)
+bool Player::check_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist, float *t, glm::vec3 *norm) const
 {
     *t = INFINITY;
     glm::vec3 moved = m_cam.pos() + dir;
@@ -111,7 +111,7 @@ void Player::update_weapon()
 }
 
 
-void Player::set_props(unsigned int shader)
+void Player::set_props(unsigned int shader) const
 {
     m_cam.set_props(shader);
     m_light.set_props(shader, 0);

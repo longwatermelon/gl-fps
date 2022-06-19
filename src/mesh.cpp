@@ -41,7 +41,7 @@ Mesh::~Mesh()
 }
 
 
-void Mesh::render(RenderInfo &ri, glm::mat4 model)
+void Mesh::render(RenderInfo &ri, glm::mat4 model) const
 {
     glUseProgram(ri.shader);
 
@@ -75,7 +75,7 @@ void Mesh::render(RenderInfo &ri, glm::mat4 model)
 }
 
 
-float Mesh::shortest_dist(glm::vec3 p, glm::vec3 *norm)
+float Mesh::shortest_dist(glm::vec3 p, glm::vec3 *norm) const
 {
     float t = INFINITY;
 
@@ -101,7 +101,7 @@ float Mesh::shortest_dist(glm::vec3 p, glm::vec3 *norm)
 }
 
 
-float Mesh::shortest_dist_tri(std::array<glm::vec3, 3> pts, glm::vec3 p, glm::vec3 *norm)
+float Mesh::shortest_dist_tri(std::array<glm::vec3, 3> pts, glm::vec3 p, glm::vec3 *norm) const
 {
     float t = INFINITY;
 

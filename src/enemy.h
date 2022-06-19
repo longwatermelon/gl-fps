@@ -10,7 +10,7 @@ public:
     ~Enemy();
 
     void update();
-    void render(RenderInfo &ri);
+    void render(RenderInfo &ri) const;
 
     void move(glm::vec3 dir);
     void rotate(glm::vec3 rot);

@@ -19,10 +19,10 @@ public:
     Mesh(Mesh&&) = default;
     ~Mesh();
 
-    void render(RenderInfo &ri, glm::mat4 model);
+    void render(RenderInfo &ri, glm::mat4 model) const;
 
-    float shortest_dist(glm::vec3 p, glm::vec3 *norm);
-    float shortest_dist_tri(std::array<glm::vec3, 3> pts, glm::vec3 p, glm::vec3 *norm);
+    float shortest_dist(glm::vec3 p, glm::vec3 *norm) const;
+    float shortest_dist_tri(std::array<glm::vec3, 3> pts, glm::vec3 p, glm::vec3 *norm) const;
 
     void update_pos(glm::vec3 pos) { m_pos = pos; }
     void update_rot(glm::vec3 rot) { m_rot = rot; }

@@ -26,7 +26,7 @@ void Light::spotlight_rotate(glm::vec3 rot)
 }
 
 
-void Light::set_props(unsigned int shader, int idx)
+void Light::set_props(unsigned int shader, int idx) const
 {
     std::string begin = "lights[" + std::to_string(idx) + "].";
 

@@ -18,7 +18,7 @@ void Enemy::update()
 }
 
 
-void Enemy::render(RenderInfo &ri)
+void Enemy::render(RenderInfo &ri) const
 {
     m_model.render(ri);
 }

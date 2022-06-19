@@ -21,7 +21,7 @@ void Weapon::update()
 }
 
 
-void Weapon::render(RenderInfo &ri)
+void Weapon::render(RenderInfo &ri) const
 {
     m_model.render(ri);
 }

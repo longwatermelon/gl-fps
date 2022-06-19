@@ -12,18 +12,18 @@ public:
     ~Player();
 
     void update(const std::vector<Model> &solids);
-    void render(RenderInfo &ri);
+    void render(RenderInfo &ri) const;
 
     void move(glm::vec3 dir);
     void move(glm::vec3 dir, const std::vector<Model> &solids);
     bool move_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist);
-    bool check_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist, float *t, glm::vec3 *norm);
+    bool check_dir(glm::vec3 dir, const std::vector<Model> &solids, float min_dist, float *t, glm::vec3 *norm) const;
 
     void rotate(glm::vec3 rot);
 
     void update_weapon();
 
-    void set_props(unsigned int shader);
+    void set_props(unsigned int shader) const;
 
     void scope(bool b) { m_scoped = b; }
 
@@ -32,9 +32,7 @@ public:
     void set_velz(float z) { m_vel.z = z; }
 
     glm::vec3 vel() const { return m_vel; }
-
     const Camera &cam() const { return m_cam; }
-
     bool scoped() const { return m_scoped; }
 
 private:
