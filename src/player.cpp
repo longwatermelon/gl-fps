@@ -181,7 +181,7 @@ void Player::set_props(unsigned int shader) const
 {
     m_cam.set_props(shader);
 
-    m_light.set_props(shader, 0);
+    /* m_light.set_props(shader, 0); */
     m_gun_light.set_props(shader, 1);
 }
 

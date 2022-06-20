@@ -60,7 +60,7 @@ void Mesh::render(RenderInfo &ri, glm::mat4 model) const
         glBindTexture(GL_TEXTURE_2D, m_textures[i]->id());
     }
 
-    shader_float(ri.shaders["basic"], std::string("material.shininess"), 32.f);
+    shader_float(ri.shaders["basic"], std::string("material.shininess"), 50.f);
 
     shader_mat4(ri.shaders["basic"], std::string("model"), &model[0][0]);
     shader_mat4(ri.shaders["basic"], std::string("view"), &ri.cam->view()[0][0]);

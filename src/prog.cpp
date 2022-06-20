@@ -12,8 +12,15 @@
 
 
 Prog::Prog(GLFWwindow *w)
-    : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f)), m_skybox("res/skybox_water/")
+    : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f)), m_skybox("res/skybox_water/"),
+      m_sun(glm::vec3(-78.f, 94.f, -146.f), Phong(
+        glm::vec3(.2f, .2f, .2f),
+        glm::vec3(1.f, 1.f, 1.f),
+        glm::vec3(1.f, 1.f, 1.f)
+      ), Attenuation(1.f, .000009f, .0000032f))
 {
+    /* m_sun.make_directional(glm::vec3(.46f, .84f, .27f)); */
+
     m_ri.add_shader("basic");
     m_ri.add_shader("color");
     m_ri.add_shader("skybox");
@@ -153,6 +160,7 @@ void Prog::mainloop()
         m_skybox.render(m_ri);
 
         glUseProgram(m_ri.shaders["basic"]);
+        m_sun.set_props(m_ri.shaders["basic"], 0);
         m_player.set_props(m_ri.shaders["basic"]);
 
         for (auto &s : m_solids)

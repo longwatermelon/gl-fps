@@ -37,5 +37,7 @@ private:
     unsigned int m_scr_vao, m_scr_vb, m_scr_ib;
     float m_scr_opacity = 0.f;
     std::vector<float> m_scr_verts;
+
+    Light m_sun;
 };
 

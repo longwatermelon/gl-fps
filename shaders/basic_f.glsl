@@ -25,6 +25,8 @@ struct Light {
     vec3 spotlight_dir;
     float spotlight_cutoff;
     float spotlight_outer_cutoff;
+
+    vec3 directional_dir;
 };
 
 in vec3 FragPos;
@@ -41,12 +43,10 @@ vec3 calculate_point_light(Light light)
     // ambient
     vec3 ambient = light.ambient * vec3(texture(material.diffuse1, TexCoords));
 
-    /* if (dot(normalize(FragPos - light.position), normalize(Normal)) > 0) */
-    /*     return ambient; */
-
     // diffuse 
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(light.position - FragPos);
+
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse1, TexCoords));
 
@@ -74,6 +74,7 @@ vec3 calculate_light(Light light)
     float distance = length(light.position - FragPos);
     float att = 1.0 / (light.constant + light.linear * distance + light.quadratic * distance * distance);
 
+    // The only difference between point and directional light is lightDir
     if (light.type == 0) return att * calculate_point_light(light);
     if (light.type == 1) return att * calculate_spotlight_light(light);
 
