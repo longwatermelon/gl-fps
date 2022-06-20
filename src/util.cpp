@@ -2,6 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <random>
 
 
 std::string util::read_file(const char *path)
@@ -87,5 +88,15 @@ float util::point_line_shortest_dist(glm::vec3 p, glm::vec3 p0, glm::vec3 p1)
 
     float h = glm::length(p - p0);
     return sqrtf(h * h - t * t);
+}
+
+
+int util::randint(int min, int max)
+{
+    std::random_device rd;
+    std::mt19937 rng(rd());
+    std::uniform_int_distribution<int> uni(min, max);
+
+    return uni(rng);
 }
 

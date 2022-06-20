@@ -158,6 +158,9 @@ void Player::check_enemies(const std::vector<Enemy> &enemies)
 {
     for (auto &e : enemies)
     {
+        if (e.health() <= 0)
+            continue;
+
         if (glm::length(e.model().pos() - m_cam.pos()) < 2.f && glfwGetTime() - m_last_hurt > 1.f)
         {
             --m_health;

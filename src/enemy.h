@@ -24,8 +24,15 @@ public:
     int health() const { return m_health; }
     const Model &model() const { return m_model; }
 
+    bool should_remove() const { return m_remove; }
+
 private:
     Model m_model;
     int m_health = 5;
+
+    glm::vec3 m_death_vector;
+    float m_death_time = 0.f;
+
+    bool m_remove = false;
 };
 

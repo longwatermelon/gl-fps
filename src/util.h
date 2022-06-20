@@ -14,6 +14,8 @@ namespace util
 
     glm::vec3 barycentric_coeffs(std::array<glm::vec3, 3> points, glm::vec3 p);
     float point_line_shortest_dist(glm::vec3 p, glm::vec3 p0, glm::vec3 p1);
+
+    int randint(int min, int max);
 }
 
 #endif

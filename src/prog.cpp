@@ -66,7 +66,7 @@ void Prog::mainloop()
                 m_enemies[i].update();
                 m_enemies[i].move_towards_player(m_player.cam().pos());
 
-                if (m_enemies[i].health() <= 0)
+                if (m_enemies[i].should_remove())
                     m_enemies.erase(m_enemies.begin() + i--);
             }
 
