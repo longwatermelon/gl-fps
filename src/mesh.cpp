@@ -66,6 +66,8 @@ void Mesh::render(RenderInfo &ri, glm::mat4 model) const
     shader_mat4(ri.shaders["basic"], std::string("view"), &ri.cam->view()[0][0]);
     shader_mat4(ri.shaders["basic"], std::string("projection"), &ri.proj[0][0]);
 
+    shader_vec3(ri.shaders["basic"], std::string("material.color"), m_col);
+
     glBindVertexArray(m_vao);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib);
 

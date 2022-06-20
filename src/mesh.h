@@ -29,8 +29,13 @@ public:
     void update_pos(glm::vec3 pos) { m_pos = pos; }
     void update_rot(glm::vec3 rot) { m_rot = rot; }
 
+    void set_col(glm::vec3 col) { m_col = col; }
+
+    glm::vec3 col() const { return m_col; }
+
 private:
     glm::vec3 m_pos, m_rot;
+    glm::vec3 m_col = glm::vec3(1.f, 1.f, 1.f);
 
     std::vector<Vertex> m_verts;
     std::vector<unsigned int> m_indices;
