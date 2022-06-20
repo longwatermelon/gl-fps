@@ -16,6 +16,7 @@ namespace util
     float point_line_shortest_dist(glm::vec3 p, glm::vec3 p0, glm::vec3 p1);
 
     int randint(int min, int max);
+    glm::vec3 randvec(int min, int max);
 }
 
 #endif

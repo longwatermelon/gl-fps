@@ -11,6 +11,8 @@ Enemy::Enemy(glm::vec3 pos, const std::string &path)
         (float)util::randint(0, 100) / 100.f,
         (float)util::randint(-100, 100) / 200.f
     );
+
+    m_model.rotate(glm::radians(util::randvec(-360, 360)));
 }
 
 

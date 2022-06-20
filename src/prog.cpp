@@ -146,6 +146,15 @@ void Prog::mainloop()
                 m_scr_opacity = .5f;
 
             m_scr_opacity -= m_scr_opacity / 10.f;
+
+            if (util::randint(0, 1000) <= 1)
+            {
+                m_enemies.emplace_back(Enemy(glm::vec3(
+                    (float)util::randint(-1000, 1000) / 10.f,
+                    (float)util::randint(-1000, 1000) / 10.f,
+                    (float)util::randint(-1000, 1000) / 10.f
+                ), "res/enemy/enemy.obj"));
+            }
         }
         else
         {

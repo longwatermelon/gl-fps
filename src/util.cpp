@@ -100,3 +100,13 @@ int util::randint(int min, int max)
     return uni(rng);
 }
 
+
+glm::vec3 util::randvec(int min, int max)
+{
+    return glm::vec3(
+        util::randint(min, max),
+        util::randint(min, max),
+        util::randint(min, max)
+    );
+}
+
