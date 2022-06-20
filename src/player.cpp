@@ -40,6 +40,8 @@ void Player::update(const std::vector<Model> &solids)
     Phong phong = m_gun_light.phong();
     glm::vec3 brightness = phong.ambient - phong.ambient / 10.f;
     m_gun_light.set_phong(Phong(brightness, brightness, brightness));
+
+    m_cam.shake();
 }
 
 
@@ -141,6 +143,8 @@ void Player::shoot_effects()
 
     glm::vec3 brightness(5.f, 5.f, 5.f);
     m_gun_light.set_phong(Phong(brightness, brightness, brightness));
+
+    m_cam.start_shake();
 }
 
 

@@ -11,7 +11,12 @@ public:
     void rotate(glm::vec3 rot);
     void update_vectors();
 
+    void start_shake();
+    void shake();
+
     void set_props(unsigned int shader) const;
+
+    glm::mat4 view() const;
 
     glm::vec3 pos() const { return m_pos; }
     glm::vec3 rot() const { return m_rot; }
@@ -20,12 +25,11 @@ public:
     glm::vec3 up() const { return m_up; }
     glm::vec3 right() const { return m_right; }
 
-    glm::mat4 view() const { return m_view; }
-
 private:
     glm::vec3 m_pos, m_rot;
     glm::vec3 m_front, m_up, m_right;
 
-    glm::mat4 m_view;
+    float m_shake_begin = 0.f;
+    glm::vec3 m_shake = glm::vec3(0.f, 0.f, 0.f);
 };
 

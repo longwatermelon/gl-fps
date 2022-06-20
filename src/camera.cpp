@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
 
@@ -24,7 +25,6 @@ Camera::~Camera()
 void Camera::move(glm::vec3 dir)
 {
     m_pos += dir;
-    m_view = glm::lookAt(m_pos, m_pos + m_front, m_up);
 }
 
 
@@ -34,7 +34,6 @@ void Camera::rotate(glm::vec3 rot)
     m_rot = util::restrict_cam_angle(m_rot);
 
     update_vectors();
-    m_view = glm::lookAt(m_pos, m_pos + m_front, m_up);
 }
 
 
@@ -57,8 +56,38 @@ void Camera::update_vectors()
 }
 
 
+void Camera::start_shake()
+{
+    m_shake_begin = glfwGetTime();
+}
+
+
+void Camera::shake()
+{
+    if (glfwGetTime() - m_shake_begin < .2f && m_shake_begin != 0.f)
+    {
+        m_shake = glm::vec3(
+            (float)util::randint(-10, 10) / 1000.f,
+            (float)util::randint(0, 10) / 1000.f,
+            (float)util::randint(-10, 10) / 1000.f
+        );
+    }
+    else
+    {
+        m_shake = glm::vec3(0.f, 0.f, 0.f);
+    }
+}
+
+
 void Camera::set_props(unsigned int shader) const
 {
     shader_vec3(shader, std::string("viewPos"), m_pos);
+}
+
+
+glm::mat4 Camera::view() const
+{
+    glm::vec3 orig = m_pos + m_shake;
+    return glm::lookAt(orig, orig + m_front, m_up);
 }
 
