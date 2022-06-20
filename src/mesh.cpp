@@ -1,6 +1,7 @@
 #include "mesh.h"
 #include "util.h"
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/intersect.hpp>
 #include <glad/glad.h>
 
 
@@ -138,5 +139,41 @@ float Mesh::shortest_dist_tri(std::array<glm::vec3, 3> pts, glm::vec3 p, glm::ve
     }
 
     return t;
+}
+
+
+bool Mesh::ray_intersect(glm::vec3 orig, glm::vec3 dir, float *t) const
+{
+    *t = INFINITY;
+
+    glm::quat yaw(glm::vec3(0.f, m_rot.y, 0.f));
+    glm::quat pitch(glm::vec3(0.f, 0.f, m_rot.z));
+    glm::quat quat = glm::normalize(yaw * pitch);
+
+    for (size_t i = 0; i < m_indices.size(); i += 3)
+    {
+        std::array<glm::vec3, 3> pts = {
+            m_pos + quat * m_verts[m_indices[i]].pos,
+            m_pos + quat * m_verts[m_indices[i + 1]].pos,
+            m_pos + quat * m_verts[m_indices[i + 2]].pos
+        };
+
+        float dist;
+
+        if (ray_intersect_tri(orig, dir, pts, &dist))
+        {
+            if (dist < *t)
+                *t = dist;
+        }
+    }
+
+    return *t != INFINITY;
+}
+
+
+bool Mesh::ray_intersect_tri(glm::vec3 orig, glm::vec3 dir, std::array<glm::vec3, 3> pts, float *t) const
+{
+    glm::vec2 bary;
+    return glm::intersectRayTriangle(orig, dir, pts[0], pts[1], pts[2], bary, *t);
 }
 

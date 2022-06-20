@@ -15,6 +15,7 @@ public:
     void rotate(glm::vec3 rot);
 
     float shortest_dist(glm::vec3 p, glm::vec3 *norm) const;
+    bool ray_intersect(glm::vec3 orig, glm::vec3 dir, float *t) const;
 
     void process_node(aiNode *node, const aiScene *sc);
     std::unique_ptr<Mesh> process_mesh(aiMesh *mesh, const aiScene *sc);

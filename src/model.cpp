@@ -93,6 +93,22 @@ float Model::shortest_dist(glm::vec3 p, glm::vec3 *norm) const
 }
 
 
+bool Model::ray_intersect(glm::vec3 orig, glm::vec3 dir, float *t) const
+{
+    *t = INFINITY;
+
+    for (auto &m : m_meshes)
+    {
+        float dist;
+
+        if (m->ray_intersect(orig, dir, &dist) && dist < *t)
+            *t = dist;
+    }
+
+    return *t != INFINITY;
+}
+
+
 void Model::process_node(aiNode *node, const aiScene *sc)
 {
     for (size_t i = 0; i < node->mNumMeshes; ++i)

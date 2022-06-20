@@ -101,6 +101,26 @@ void Player::rotate(glm::vec3 rot)
 }
 
 
+Enemy *Player::shoot(std::vector<Enemy> &enemies) const
+{
+    float nearest = INFINITY;
+    Enemy *enemy = 0;
+
+    for (auto &e : enemies)
+    {
+        float dist;
+
+        if (e.ray_intersect(m_cam.pos(), m_cam.front(), &dist) && dist < nearest)
+        {
+            nearest = dist;
+            enemy = &e;
+        }
+    }
+
+    return enemy;
+}
+
+
 void Player::update_weapon()
 {
     m_gun.set_target_pos(m_cam.pos() + m_cam.front() +

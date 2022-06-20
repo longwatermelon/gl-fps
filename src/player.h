@@ -3,6 +3,7 @@
 #include "model.h"
 #include "weapon.h"
 #include "light.h"
+#include "enemy.h"
 #include <glm/glm.hpp>
 
 class Player
@@ -21,6 +22,7 @@ public:
 
     void rotate(glm::vec3 rot);
 
+    Enemy *shoot(std::vector<Enemy> &enemies) const;
     void update_weapon();
 
     void set_props(unsigned int shader) const;

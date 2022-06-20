@@ -15,6 +15,8 @@ public:
     void move(glm::vec3 dir);
     void rotate(glm::vec3 rot);
 
+    bool ray_intersect(glm::vec3 orig, glm::vec3 dir, float *t) const;
+
 private:
     Model m_model;
 };
