@@ -39,6 +39,7 @@ public:
     Light &make_spotlight(glm::vec3 dir, float cutoff, float outer_cutoff);
 
     void set_phong(Phong p) { m_col = p; }
+    void set_spotlight_dir(glm::vec3 dir) { m_spotlight_dir = dir; }
 
     Phong phong() const { return m_col; }
 

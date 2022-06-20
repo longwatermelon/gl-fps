@@ -17,6 +17,7 @@ Player::Player(glm::vec3 pos, glm::vec3 rot)
         glm::vec3(0.f, 0.f, 0.f)
       ), Attenuation(1.f, .00009f, .000032f))
 {
+    m_gun_light.make_spotlight(m_cam.front(), cosf(glm::radians(50.f)), cosf(glm::radians(90.f)));
 }
 
 
@@ -27,14 +28,14 @@ Player::~Player()
 
 void Player::update(const std::vector<Model> &solids)
 {
-    m_gun_light.move(m_cam.pos() + m_cam.front());
+    m_gun_light.move(m_cam.pos() + m_cam.front() * 1.5f);
+    m_gun_light.set_spotlight_dir(m_cam.front());
 
     m_vel.y -= .01f;
 
     move(m_vel, solids);
     update_weapon();
 
-    // TODO Spotlight gun light
     Phong phong = m_gun_light.phong();
     glm::vec3 brightness = phong.ambient - phong.ambient / 10.f;
     m_gun_light.set_phong(Phong(brightness, brightness, brightness));
