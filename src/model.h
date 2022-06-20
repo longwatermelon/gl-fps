@@ -7,6 +7,7 @@ class Model
 public:
     Model(glm::vec3 pos, const std::string &path);
     Model(Model&&) = default;
+    Model &operator=(Model&&) = default;
     ~Model();
 
     void render(RenderInfo &ri) const;

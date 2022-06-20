@@ -56,8 +56,13 @@ void Prog::mainloop()
 
         m_player.update(m_solids);
 
-        for (auto &e : m_enemies)
-            e.update();
+        for (size_t i = 0; i < m_enemies.size(); ++i)
+        {
+            m_enemies[i].update();
+
+            if (m_enemies[i].health() < 0)
+                m_enemies.erase(m_enemies.begin() + i--);
+        }
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -119,8 +124,9 @@ void Prog::events()
         {
             m_player_last_shot = glfwGetTime();
 
-            if (m_player.shoot(m_enemies))
-                std::cout << "here\n";
+            Enemy *e = m_player.shoot(m_enemies);
+            if (e)
+                e->damage(1);
         }
     }
 

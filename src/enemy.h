@@ -7,6 +7,7 @@ class Enemy
 public:
     Enemy(glm::vec3 pos, const std::string &path);
     Enemy(Enemy&&) = default;
+    Enemy& operator=(Enemy&&) = default;
     ~Enemy();
 
     void update();
@@ -16,8 +17,12 @@ public:
     void rotate(glm::vec3 rot);
 
     bool ray_intersect(glm::vec3 orig, glm::vec3 dir, float *t) const;
+    void damage(int damage);
+
+    int health() const { return m_health; }
 
 private:
     Model m_model;
+    int m_health = 5;
 };
 

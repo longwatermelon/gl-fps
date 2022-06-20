@@ -41,3 +41,9 @@ bool Enemy::ray_intersect(glm::vec3 orig, glm::vec3 dir, float *t) const
     return m_model.ray_intersect(orig, dir, t);
 }
 
+
+void Enemy::damage(int damage)
+{
+    m_health -= damage;
+}
+
