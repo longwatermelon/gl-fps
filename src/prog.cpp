@@ -80,7 +80,8 @@ void Prog::mainloop()
         glClear(GL_DEPTH_BUFFER_BIT);
         m_player.render(m_ri);
 
-        draw_crosshair();
+        if (m_player.scoped())
+            draw_crosshair();
 
         glfwSwapBuffers(m_win);
         glfwPollEvents();
