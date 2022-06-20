@@ -39,6 +39,7 @@ public:
     glm::vec3 vel() const { return m_vel; }
     const Camera &cam() const { return m_cam; }
     bool scoped() const { return m_scoped; }
+    int health() const { return m_health; }
 
 private:
     Camera m_cam;

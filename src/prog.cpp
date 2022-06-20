@@ -3,9 +3,11 @@
 #include "model.h"
 #include <vector>
 #include <iostream>
+
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
+
 #include <stb/stb_image.h>
 
 
@@ -55,15 +57,23 @@ void Prog::mainloop()
         prev_mx = mx;
         prev_my = my;
 
-        m_player.update(m_solids);
-
-        for (size_t i = 0; i < m_enemies.size(); ++i)
+        if (m_player.health() > 0)
         {
-            m_enemies[i].update();
-            m_enemies[i].move_towards_player(m_player.cam().pos());
+            m_player.update(m_solids);
 
-            if (m_enemies[i].health() <= 0)
-                m_enemies.erase(m_enemies.begin() + i--);
+            for (size_t i = 0; i < m_enemies.size(); ++i)
+            {
+                m_enemies[i].update();
+                m_enemies[i].move_towards_player(m_player.cam().pos());
+
+                if (m_enemies[i].health() <= 0)
+                    m_enemies.erase(m_enemies.begin() + i--);
+            }
+
+            m_player.check_enemies(m_enemies);
+        }
+        else
+        {
         }
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
