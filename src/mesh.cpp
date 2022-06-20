@@ -63,7 +63,7 @@ void Mesh::render(RenderInfo &ri, glm::mat4 model) const
     shader_float(ri.shaders["basic"], std::string("material.shininess"), 32.f);
 
     shader_mat4(ri.shaders["basic"], std::string("model"), &model[0][0]);
-    shader_mat4(ri.shaders["basic"], std::string("view"), &ri.view[0][0]);
+    shader_mat4(ri.shaders["basic"], std::string("view"), &ri.cam->view()[0][0]);
     shader_mat4(ri.shaders["basic"], std::string("projection"), &ri.proj[0][0]);
 
     glBindVertexArray(m_vao);

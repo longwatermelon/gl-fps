@@ -2,6 +2,7 @@
 #include <iostream>
 #include <glm/gtx/string_cast.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <GLFW/glfw3.h>
 
 
 Player::Player(glm::vec3 pos, glm::vec3 rot)
@@ -150,6 +151,19 @@ void Player::update_weapon()
         (-m_cam.up() / 3.f));
     m_gun.set_target_rot(m_cam.rot());
     m_gun.update();
+}
+
+
+void Player::check_enemies(const std::vector<Enemy> &enemies)
+{
+    for (auto &e : enemies)
+    {
+        if (glm::length(e.model().pos() - m_cam.pos()) < 2.f && glfwGetTime() - m_last_hurt > 1.f)
+        {
+            --m_health;
+            m_last_hurt = glfwGetTime();
+        }
+    }
 }
 
 

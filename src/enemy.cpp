@@ -30,6 +30,12 @@ void Enemy::move(glm::vec3 dir)
 }
 
 
+void Enemy::move_towards_player(glm::vec3 cam)
+{
+    m_model.move(glm::normalize(cam - m_model.pos()) / 10.f);
+}
+
+
 void Enemy::rotate(glm::vec3 rot)
 {
     m_model.rotate(rot);

@@ -14,12 +14,15 @@ public:
     void render(RenderInfo &ri) const;
 
     void move(glm::vec3 dir);
+    void move_towards_player(glm::vec3 cam);
+
     void rotate(glm::vec3 rot);
 
     bool ray_intersect(glm::vec3 orig, glm::vec3 dir, float *t) const;
     void damage(int damage);
 
     int health() const { return m_health; }
+    const Model &model() const { return m_model; }
 
 private:
     Model m_model;

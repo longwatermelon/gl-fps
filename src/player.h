@@ -26,6 +26,8 @@ public:
     void shoot_effects();
     void update_weapon();
 
+    void check_enemies(const std::vector<Enemy> &enemies);
+
     void set_props(unsigned int shader) const;
 
     void scope(bool b) { m_scoped = b; }
@@ -47,5 +49,8 @@ private:
 
     Light m_light;
     Light m_gun_light;
+
+    int m_health = 5;
+    float m_last_hurt = 0.f;
 };
 

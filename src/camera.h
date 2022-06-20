@@ -20,8 +20,12 @@ public:
     glm::vec3 up() const { return m_up; }
     glm::vec3 right() const { return m_right; }
 
+    glm::mat4 view() const { return m_view; }
+
 private:
     glm::vec3 m_pos, m_rot;
     glm::vec3 m_front, m_up, m_right;
+
+    glm::mat4 m_view;
 };
 

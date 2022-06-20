@@ -8,7 +8,7 @@
 struct RenderInfo
 {
     std::map<std::string, unsigned int> shaders;
-    glm::mat4 view, proj;
+    glm::mat4 proj;
     const Camera *cam;
 
     void add_shader(const std::string &name);

@@ -24,6 +24,7 @@ Camera::~Camera()
 void Camera::move(glm::vec3 dir)
 {
     m_pos += dir;
+    m_view = glm::lookAt(m_pos, m_pos + m_front, m_up);
 }
 
 
@@ -33,6 +34,7 @@ void Camera::rotate(glm::vec3 rot)
     m_rot = util::restrict_cam_angle(m_rot);
 
     update_vectors();
+    m_view = glm::lookAt(m_pos, m_pos + m_front, m_up);
 }
 
 
