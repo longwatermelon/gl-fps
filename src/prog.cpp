@@ -13,14 +13,12 @@
 
 Prog::Prog(GLFWwindow *w)
     : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f)), m_skybox("res/skybox_water/"),
-      m_sun(glm::vec3(-78.f, 94.f, -146.f), Phong(
+      m_sun(glm::vec3(-5040.f, 4120.f, -879.f), Phong(
         glm::vec3(.2f, .2f, .2f),
         glm::vec3(1.f, 1.f, 1.f),
         glm::vec3(1.f, 1.f, 1.f)
-      ), Attenuation(1.f, .000009f, .0000032f))
+      ), Attenuation(1.f, .0000000019f, .0000000006f))
 {
-    /* m_sun.make_directional(glm::vec3(.46f, .84f, .27f)); */
-
     m_ri.add_shader("basic");
     m_ri.add_shader("color");
     m_ri.add_shader("skybox");
@@ -122,6 +120,7 @@ void Prog::mainloop()
 
     while (!glfwWindowShouldClose(m_win))
     {
+        std::cout << glm::to_string(m_player.cam().pos() + m_player.cam().front() * 1000.f) << "\n";
         events();
 
         double mx, my;
