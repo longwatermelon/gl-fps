@@ -14,9 +14,12 @@ Prog::Prog(GLFWwindow *w)
 {
     m_ri.add_shader("basic");
     m_ri.add_shader("white");
+    m_ri.add_shader("skybox");
 
     m_ri.view = glm::mat4(1.f);
     m_ri.proj = glm::perspective(glm::radians(45.f), 800.f / 600.f, .01f, 1000.f);
+
+    m_ri.cam = &m_player.cam();
 
     m_solids.emplace_back(Model(glm::vec3(0.f, 0.f, -40.f), "res/ground/untitled.obj"));
     m_enemies.emplace_back(Enemy(glm::vec3(0.f, 50.f, 0.f), "res/enemy/enemy.obj"));
@@ -42,7 +45,6 @@ void Prog::mainloop()
     double prev_mx, prev_my;
     glfwGetCursorPos(m_win, &prev_mx, &prev_my);
 
-
     while (!glfwWindowShouldClose(m_win))
     {
         events();
@@ -66,6 +68,9 @@ void Prog::mainloop()
 
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glUseProgram(m_ri.shaders["skybox"]);
+        m_skybox.render(m_ri);
 
         glUseProgram(m_ri.shaders["basic"]);
         m_ri.view = glm::lookAt(m_player.cam().pos(), m_player.cam().pos() + m_player.cam().front(), m_player.cam().up());

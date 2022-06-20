@@ -3,6 +3,7 @@
 #include "camera.h"
 #include "player.h"
 #include "enemy.h"
+#include "skybox.h"
 #include <memory>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -26,6 +27,8 @@ private:
 
     std::vector<Model> m_solids;
     std::vector<Enemy> m_enemies;
+
+    Skybox m_skybox;
 
     float m_player_last_shot;
 };
