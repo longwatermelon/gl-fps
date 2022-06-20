@@ -32,6 +32,8 @@ Model::Model(glm::vec3 pos, const std::string &path)
 
     move(pos);
     rotate(m_rot);
+
+    set_col(glm::vec3(1.f, 1.f, 1.f));
 }
 
 
@@ -106,6 +108,15 @@ bool Model::ray_intersect(glm::vec3 orig, glm::vec3 dir, float *t) const
     }
 
     return *t != INFINITY;
+}
+
+
+void Model::set_col(glm::vec3 col)
+{
+    m_col = col;
+
+    for (auto &m : m_meshes)
+        m->set_col(m_col);
 }
 
 

@@ -27,11 +27,16 @@ void Enemy::update()
 
     if (m_health <= 0)
     {
+        m_model.set_col(m_model.col() + (glm::vec3(0.f, 0.f, 0.f) - m_model.col()) / 100.f);
         m_model.move(m_death_vector);
         m_death_vector.y -= .01f;
 
         if (glfwGetTime() - m_death_time > 5.f)
             m_remove = true;
+    }
+    else
+    {
+        m_model.set_col(m_model.col() + (glm::vec3(1.f, 1.f, 1.f) - m_model.col()) / 20.f);
     }
 }
 
@@ -72,6 +77,7 @@ void Enemy::damage(int damage)
         return;
 
     m_health -= damage;
+    m_model.set_col(glm::vec3(1.f, 0.f, 0.f));
 
     if (m_health <= 0)
         m_death_time = glfwGetTime();

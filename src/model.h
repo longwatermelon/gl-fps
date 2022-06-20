@@ -18,16 +18,21 @@ public:
     float shortest_dist(glm::vec3 p, glm::vec3 *norm) const;
     bool ray_intersect(glm::vec3 orig, glm::vec3 dir, float *t) const;
 
+    void set_col(glm::vec3 col);
+
     void process_node(aiNode *node, const aiScene *sc);
     std::unique_ptr<Mesh> process_mesh(aiMesh *mesh, const aiScene *sc);
 
     std::vector<Texture*> load_mat_textures(aiMaterial *mat, aiTextureType type, TextureType ttype);
 
+    glm::vec3 col() const { return m_col; }
     glm::vec3 pos() const { return m_pos; }
     glm::vec3 rot() const { return m_rot; }
 
 private:
     glm::vec3 m_pos, m_rot;
+    glm::vec3 m_col;
+
     std::string m_dir;
 
     std::vector<std::unique_ptr<Mesh>> m_meshes;

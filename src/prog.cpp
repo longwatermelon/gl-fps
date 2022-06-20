@@ -24,11 +24,9 @@ Prog::Prog(GLFWwindow *w)
     m_ri.add_shader("skybox");
 
     m_ri.proj = glm::perspective(glm::radians(45.f), 800.f / 600.f, .01f, 1000.f);
-
     m_ri.cam = &m_player.cam();
 
     m_solids.emplace_back(Model(glm::vec3(0.f, 0.f, -40.f), "res/ground/untitled.obj"));
-    m_enemies.emplace_back(Enemy(glm::vec3(0.f, 50.f, 0.f), "res/enemy/enemy.obj"));
 
     m_player_last_shot = 0.f;
 
@@ -147,12 +145,12 @@ void Prog::mainloop()
 
             m_scr_opacity -= m_scr_opacity / 10.f;
 
-            if (util::randint(0, 1000) <= 1)
+            if (util::randint(0, 1300) <= 2)
             {
                 m_enemies.emplace_back(Enemy(glm::vec3(
-                    (float)util::randint(-1000, 1000) / 10.f,
-                    (float)util::randint(-1000, 1000) / 10.f,
-                    (float)util::randint(-1000, 1000) / 10.f
+                    (float)util::randint(-500, 500) / 10.f,
+                    (float)util::randint(-200, 500) / 10.f,
+                    (float)util::randint(-500, 500) / 10.f
                 ), "res/enemy/enemy.obj"));
             }
         }
