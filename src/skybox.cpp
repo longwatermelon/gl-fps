@@ -106,7 +106,7 @@ Skybox::~Skybox()
 
 void Skybox::render(RenderInfo &ri)
 {
-    glm::vec3 orig = ri.cam->pos() / 1000.f;
+    glm::vec3 orig = ri.cam->pos() / 2000.f;
     glm::mat4 view = glm::lookAt(orig, orig + ri.cam->front(), ri.cam->up());
 
     shader_mat4(ri.shaders["skybox"], std::string("view"), glm::value_ptr(view));
