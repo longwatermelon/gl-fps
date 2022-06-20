@@ -12,7 +12,7 @@
 
 
 Prog::Prog(GLFWwindow *w)
-    : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f))
+    : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f)), m_skybox("res/skybox_water/")
 {
     m_ri.add_shader("basic");
     m_ri.add_shader("color");
@@ -228,6 +228,7 @@ void Prog::events()
 void Prog::draw_crosshair()
 {
     glUseProgram(m_ri.shaders["color"]);
+    shader_float(m_ri.shaders["color"], std::string("opacity"), 1.f);
 
     glBindVertexArray(m_crosshair_vao);
     glDrawArrays(GL_LINES, 0, 4);

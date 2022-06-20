@@ -6,7 +6,7 @@
 class Skybox
 {
 public:
-    Skybox();
+    Skybox(const std::string &prefix);
     ~Skybox();
 
     void render(RenderInfo &ri);

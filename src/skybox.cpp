@@ -49,24 +49,24 @@ float g_verts[] = {
      1.0f, -1.0f,  1.0f
 };
 
-Skybox::Skybox()
+Skybox::Skybox(const std::string &prefix)
 {
     glGenTextures(1, &m_tex);
     glBindTexture(GL_TEXTURE_CUBE_MAP, m_tex);
 
-    std::array<const char*, 6> faces = {
-        "res/skybox/right.jpg",
-        "res/skybox/left.jpg",
-        "res/skybox/top.jpg",
-        "res/skybox/bottom.jpg",
-        "res/skybox/front.jpg",
-        "res/skybox/back.jpg"
+    std::array<std::string, 6> faces = {
+        prefix + "right.jpg",
+        prefix + "left.jpg",
+        prefix + "top.jpg",
+        prefix + "bottom.jpg",
+        prefix + "front.jpg",
+        prefix + "back.jpg"
     };
 
     int width, height, nchannels;
     for (size_t i = 0; i < 6; ++i)
     {
-        unsigned char *data = stbi_load(faces[i], &width, &height, &nchannels, 0);
+        unsigned char *data = stbi_load(faces[i].c_str(), &width, &height, &nchannels, 0);
 
         if (data)
         {
