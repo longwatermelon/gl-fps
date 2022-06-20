@@ -124,7 +124,7 @@ void Prog::events()
         if (glfwGetTime() - m_player_last_shot > .5f)
         {
             m_player_last_shot = glfwGetTime();
-            m_player.recoil();
+            m_player.shoot_effects();
 
             Enemy *e = m_player.shoot(m_enemies);
             if (e)

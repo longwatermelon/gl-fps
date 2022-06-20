@@ -23,7 +23,7 @@ public:
     void rotate(glm::vec3 rot);
 
     Enemy *shoot(std::vector<Enemy> &enemies) const;
-    void recoil();
+    void shoot_effects();
     void update_weapon();
 
     void set_props(unsigned int shader) const;
@@ -46,5 +46,6 @@ private:
     glm::vec3 m_vel;
 
     Light m_light;
+    Light m_gun_light;
 };
 

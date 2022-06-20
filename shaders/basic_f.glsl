@@ -33,7 +33,7 @@ in vec3 Normal;
 uniform vec3 viewPos;
 uniform Material material;
 
-#define nlights 1
+#define nlights 2
 uniform Light lights[nlights];
 
 vec3 calculate_point_light(Light light)

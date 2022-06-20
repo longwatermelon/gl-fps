@@ -10,6 +10,11 @@ Player::Player(glm::vec3 pos, glm::vec3 rot)
         glm::vec3(.2f, .2f, .2f),
         glm::vec3(.5f, .5f, .5f),
         glm::vec3(1.f, 1.f, 1.f)
+      ), Attenuation(1.f, .00009f, .000032f)),
+      m_gun_light(pos, Phong(
+        glm::vec3(0.f, 0.f, 0.f),
+        glm::vec3(0.f, 0.f, 0.f),
+        glm::vec3(0.f, 0.f, 0.f)
       ), Attenuation(1.f, .00009f, .000032f))
 {
 }
@@ -22,10 +27,17 @@ Player::~Player()
 
 void Player::update(const std::vector<Model> &solids)
 {
+    m_gun_light.move(m_cam.pos() + m_cam.front());
+
     m_vel.y -= .01f;
 
     move(m_vel, solids);
     update_weapon();
+
+    // TODO Spotlight gun light
+    Phong phong = m_gun_light.phong();
+    glm::vec3 brightness = phong.ambient - phong.ambient / 10.f;
+    m_gun_light.set_phong(Phong(brightness, brightness, brightness));
 }
 
 
@@ -121,9 +133,12 @@ Enemy *Player::shoot(std::vector<Enemy> &enemies) const
 }
 
 
-void Player::recoil()
+void Player::shoot_effects()
 {
     m_gun.set_rot(m_cam.rot() + glm::vec3(0.f, 0.f, .4f));
+
+    glm::vec3 brightness(5.f, 5.f, 5.f);
+    m_gun_light.set_phong(Phong(brightness, brightness, brightness));
 }
 
 
@@ -140,6 +155,8 @@ void Player::update_weapon()
 void Player::set_props(unsigned int shader) const
 {
     m_cam.set_props(shader);
+
     m_light.set_props(shader, 0);
+    m_gun_light.set_props(shader, 1);
 }
 
