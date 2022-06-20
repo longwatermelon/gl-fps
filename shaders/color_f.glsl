@@ -1,10 +1,12 @@
 #version 330 core
 out vec4 FragColor;
 
-in vec4 Color;
+in vec3 Color;
+
+uniform float opacity;
 
 void main()
 {
-    FragColor = Color;
+    FragColor = vec4(Color, opacity);
 }
 

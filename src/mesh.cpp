@@ -67,6 +67,8 @@ void Mesh::render(RenderInfo &ri, glm::mat4 model) const
     shader_mat4(ri.shaders["basic"], std::string("projection"), &ri.proj[0][0]);
 
     glBindVertexArray(m_vao);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib);
+
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 

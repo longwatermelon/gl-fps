@@ -26,7 +26,7 @@ public:
     void shoot_effects();
     void update_weapon();
 
-    void check_enemies(const std::vector<Enemy> &enemies);
+    bool check_enemies(const std::vector<Enemy> &enemies);
 
     void set_props(unsigned int shader) const;
 

@@ -27,15 +27,16 @@ Prog::Prog(GLFWwindow *w)
 
     m_player_last_shot = 0.f;
 
+    // crosshair
     float verts[] = {
         // verts      colors
-        400.f, 305.f, 1.f, 0.f, 0.f, 1.f,
-        400.f, 295.f, 0.f, 1.f, 1.f, 1.f,
-        395.f, 300.f, 1.f, 0.f, 0.f, 1.f,
-        405.f, 300.f, 0.f, 1.f, 1.f, 1.f
+        400.f, 305.f, 1.f, 0.f, 0.f,
+        400.f, 295.f, 0.f, 1.f, 1.f,
+        395.f, 300.f, 1.f, 0.f, 0.f,
+        405.f, 300.f, 0.f, 1.f, 1.f
     };
 
-    for (size_t i = 0; i < sizeof(verts) / sizeof(float); i += 6)
+    for (size_t i = 0; i < sizeof(verts) / sizeof(float); i += 5)
     {
         verts[i] = (verts[i] / 400.f - 1.f) * 1.5f;
         verts[i + 1] = (verts[i + 1] / 300.f - 1.f) * 1.5f;
@@ -49,10 +50,41 @@ Prog::Prog(GLFWwindow *w)
     glBindBuffer(GL_ARRAY_BUFFER, m_crosshair_vb);
     glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(2 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    // screen color
+    m_scr_verts = {
+        -1.f, -1.f,   1.f, 0.f, 0.f, // bot left
+         1.f, -1.f,   1.f, 0.f, 0.f, // bot right
+         1.f,  1.f,   1.f, 0.f, 0.f, // top right
+        -1.f,  1.f,   1.f, 0.f, 0.f, // top left
+    };
+
+    unsigned int scr_indices[] = {
+        0, 1, 2,
+        0, 2, 3
+    };
+
+    glGenVertexArrays(1, &m_scr_vao);
+    glBindVertexArray(m_scr_vao);
+
+    glGenBuffers(1, &m_scr_vb);
+    glGenBuffers(1, &m_scr_ib);
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_scr_vb);
+    glBufferData(GL_ARRAY_BUFFER, m_scr_verts.size() * sizeof(float), m_scr_verts.data(), GL_DYNAMIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_scr_ib);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(scr_indices), scr_indices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
     glEnableVertexAttribArray(1);
 }
 
@@ -61,6 +93,10 @@ Prog::~Prog()
 {
     glDeleteVertexArrays(1, &m_crosshair_vao);
     glDeleteBuffers(1, &m_crosshair_vb);
+
+    glDeleteVertexArrays(1, &m_scr_vao);
+    glDeleteBuffers(1, &m_scr_vb);
+    glDeleteBuffers(1, &m_scr_ib);
 
     m_ri.clear_shaders();
 }
@@ -101,7 +137,10 @@ void Prog::mainloop()
                     m_enemies.erase(m_enemies.begin() + i--);
             }
 
-            m_player.check_enemies(m_enemies);
+            if (m_player.check_enemies(m_enemies))
+                m_scr_opacity = .5f;
+
+            m_scr_opacity -= m_scr_opacity / 10.f;
         }
         else
         {
@@ -127,6 +166,8 @@ void Prog::mainloop()
 
         if (m_player.scoped())
             draw_crosshair();
+
+        draw_damage();
 
         glfwSwapBuffers(m_win);
         glfwPollEvents();
@@ -186,8 +227,25 @@ void Prog::events()
 
 void Prog::draw_crosshair()
 {
-    glBindVertexArray(m_crosshair_vao);
     glUseProgram(m_ri.shaders["color"]);
+
+    glBindVertexArray(m_crosshair_vao);
     glDrawArrays(GL_LINES, 0, 4);
+}
+
+
+void Prog::draw_damage()
+{
+    glBindVertexArray(m_scr_vao);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_scr_ib);
+
+    glUseProgram(m_ri.shaders["color"]);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    shader_float(m_ri.shaders["color"], std::string("opacity"), m_scr_opacity);
+
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 

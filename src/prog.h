@@ -18,6 +18,7 @@ public:
     void events();
 
     void draw_crosshair();
+    void draw_damage();
 
 private:
     GLFWwindow *m_win;
@@ -33,5 +34,8 @@ private:
     float m_player_last_shot;
 
     unsigned int m_crosshair_vao, m_crosshair_vb;
+    unsigned int m_scr_vao, m_scr_vb, m_scr_ib;
+    float m_scr_opacity = 0.f;
+    std::vector<float> m_scr_verts;
 };
 

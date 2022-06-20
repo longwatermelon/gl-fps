@@ -158,7 +158,7 @@ void Player::update_weapon()
 }
 
 
-void Player::check_enemies(const std::vector<Enemy> &enemies)
+bool Player::check_enemies(const std::vector<Enemy> &enemies)
 {
     for (auto &e : enemies)
     {
@@ -169,8 +169,11 @@ void Player::check_enemies(const std::vector<Enemy> &enemies)
         {
             --m_health;
             m_last_hurt = glfwGetTime();
+            return true;
         }
     }
+
+    return false;
 }
 
 
