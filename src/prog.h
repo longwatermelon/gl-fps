@@ -26,5 +26,7 @@ private:
 
     std::vector<Model> m_solids;
     std::vector<Enemy> m_enemies;
+
+    float m_player_last_shot;
 };
 

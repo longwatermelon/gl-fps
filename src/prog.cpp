@@ -20,6 +20,8 @@ Prog::Prog(GLFWwindow *w)
 
     m_solids.emplace_back(Model(glm::vec3(0.f, 0.f, -40.f), "res/ground/untitled.obj"));
     m_enemies.emplace_back(Enemy(glm::vec3(0.f, 50.f, 0.f), "res/enemy/enemy.obj"));
+
+    m_player_last_shot = 0.f;
 }
 
 
@@ -112,8 +114,15 @@ void Prog::events()
     if (glfwGetKey(m_win, GLFW_KEY_DOWN) == GLFW_PRESS) m_player.rotate(glm::vec3(0.f, -rot, 0.f));
 
     if (glfwGetMouseButton(m_win, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
-        if (m_player.shoot(m_enemies))
-            std::cout << "here\n";
+    {
+        if (glfwGetTime() - m_player_last_shot > .5f)
+        {
+            m_player_last_shot = glfwGetTime();
+
+            if (m_player.shoot(m_enemies))
+                std::cout << "here\n";
+        }
+    }
 
     m_player.scope(glfwGetMouseButton(m_win, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS);
 
