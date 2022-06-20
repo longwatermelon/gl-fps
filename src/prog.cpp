@@ -15,7 +15,7 @@ Prog::Prog(GLFWwindow *w)
     : m_win(w), m_player(glm::vec3(-30.f, 70.f, 0.f), glm::vec3(0.f, 0.f, 0.f))
 {
     m_ri.add_shader("basic");
-    m_ri.add_shader("white");
+    m_ri.add_shader("color");
     m_ri.add_shader("skybox");
 
     m_ri.proj = glm::perspective(glm::radians(45.f), 800.f / 600.f, .01f, 1000.f);
@@ -28,13 +28,14 @@ Prog::Prog(GLFWwindow *w)
     m_player_last_shot = 0.f;
 
     float verts[] = {
-        400.f, 305.f,
-        400.f, 295.f,
-        395.f, 300.f,
-        405.f, 300.f
+        // verts      colors
+        400.f, 305.f, 1.f, 0.f, 0.f, 1.f,
+        400.f, 295.f, 0.f, 1.f, 1.f, 1.f,
+        395.f, 300.f, 1.f, 0.f, 0.f, 1.f,
+        405.f, 300.f, 0.f, 1.f, 1.f, 1.f
     };
 
-    for (size_t i = 0; i < sizeof(verts) / sizeof(float); i += 2)
+    for (size_t i = 0; i < sizeof(verts) / sizeof(float); i += 6)
     {
         verts[i] = (verts[i] / 400.f - 1.f) * 1.5f;
         verts[i + 1] = (verts[i + 1] / 300.f - 1.f) * 1.5f;
@@ -48,8 +49,11 @@ Prog::Prog(GLFWwindow *w)
     glBindBuffer(GL_ARRAY_BUFFER, m_crosshair_vb);
     glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(2 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 }
 
 
@@ -183,7 +187,7 @@ void Prog::events()
 void Prog::draw_crosshair()
 {
     glBindVertexArray(m_crosshair_vao);
-    glUseProgram(m_ri.shaders["white"]);
+    glUseProgram(m_ri.shaders["color"]);
     glDrawArrays(GL_LINES, 0, 4);
 }
 
