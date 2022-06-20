@@ -44,8 +44,6 @@ Mesh::~Mesh()
 
 void Mesh::render(RenderInfo &ri, glm::mat4 model) const
 {
-    glUseProgram(ri.shaders["basic"]);
-
     unsigned int diffuse_n = 1, specular_n = 1;
 
     for (size_t i = 0; i < m_textures.size(); ++i)
