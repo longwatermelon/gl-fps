@@ -121,6 +121,12 @@ Enemy *Player::shoot(std::vector<Enemy> &enemies) const
 }
 
 
+void Player::recoil()
+{
+    m_gun.set_rot(m_cam.rot() + glm::vec3(0.f, 0.f, .4f));
+}
+
+
 void Player::update_weapon()
 {
     m_gun.set_target_pos(m_cam.pos() + m_cam.front() +

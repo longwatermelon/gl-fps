@@ -18,6 +18,9 @@ public:
     void set_target_pos(glm::vec3 pos);
     void set_target_rot(glm::vec3 rot);
 
+    void set_pos(glm::vec3 pos);
+    void set_rot(glm::vec3 rot);
+
 private:
     Model m_model;
     glm::vec3 m_target_pos, m_target_rot;

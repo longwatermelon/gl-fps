@@ -45,3 +45,15 @@ void Weapon::set_target_rot(glm::vec3 rot)
     m_target_rot = rot;
 }
 
+
+void Weapon::set_pos(glm::vec3 pos)
+{
+    m_model.move(pos - m_model.pos());
+}
+
+
+void Weapon::set_rot(glm::vec3 rot)
+{
+    m_model.rotate(rot - m_model.rot());
+}
+
