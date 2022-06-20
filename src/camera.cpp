@@ -64,7 +64,7 @@ void Camera::start_shake()
 
 void Camera::shake()
 {
-    if (glfwGetTime() - m_shake_begin < .2f && m_shake_begin != 0.f)
+    if (glfwGetTime() - m_shake_begin < .1f && m_shake_begin != 0.f)
     {
         m_shake = glm::vec3(
             (float)util::randint(-10, 10) / 1000.f,

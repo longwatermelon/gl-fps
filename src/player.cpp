@@ -16,9 +16,9 @@ Player::Player(glm::vec3 pos, glm::vec3 rot)
         glm::vec3(0.f, 0.f, 0.f),
         glm::vec3(0.f, 0.f, 0.f),
         glm::vec3(0.f, 0.f, 0.f)
-      ), Attenuation(1.f, .00009f, .000032f))
+      ), Attenuation(1.f, .009f, .0032f))
 {
-    m_gun_light.make_spotlight(m_cam.front(), cosf(glm::radians(50.f)), cosf(glm::radians(90.f)));
+    m_gun_light.make_spotlight(m_cam.front(), cosf(glm::radians(30.f)), cosf(glm::radians(50.f)));
 }
 
 
@@ -141,7 +141,7 @@ void Player::shoot_effects()
 {
     m_gun.set_rot(m_cam.rot() + glm::vec3(0.f, 0.f, .4f));
 
-    glm::vec3 brightness(5.f, 5.f, 5.f);
+    glm::vec3 brightness(2.f, 2.f, 2.f);
     m_gun_light.set_phong(Phong(brightness, brightness, brightness));
 
     m_cam.start_shake();

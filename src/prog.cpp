@@ -26,11 +26,38 @@ Prog::Prog(GLFWwindow *w)
     m_enemies.emplace_back(Enemy(glm::vec3(0.f, 50.f, 0.f), "res/enemy/enemy.obj"));
 
     m_player_last_shot = 0.f;
+
+    float verts[] = {
+        400.f, 305.f,
+        400.f, 295.f,
+        395.f, 300.f,
+        405.f, 300.f
+    };
+
+    for (size_t i = 0; i < sizeof(verts) / sizeof(float); i += 2)
+    {
+        verts[i] = (verts[i] / 400.f - 1.f) * 1.5f;
+        verts[i + 1] = (verts[i + 1] / 300.f - 1.f) * 1.5f;
+    }
+
+    glGenVertexArrays(1, &m_crosshair_vao);
+    glBindVertexArray(m_crosshair_vao);
+
+    glGenBuffers(1, &m_crosshair_vb);
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_crosshair_vb);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
+    glEnableVertexAttribArray(0);
 }
 
 
 Prog::~Prog()
 {
+    glDeleteVertexArrays(1, &m_crosshair_vao);
+    glDeleteBuffers(1, &m_crosshair_vb);
+
     m_ri.clear_shaders();
 }
 
@@ -155,36 +182,8 @@ void Prog::events()
 
 void Prog::draw_crosshair()
 {
-    float verts[] = {
-        400.f, 305.f,
-        400.f, 295.f,
-        395.f, 300.f,
-        405.f, 300.f
-    };
-
-    for (size_t i = 0; i < sizeof(verts) / sizeof(float); i += 2)
-    {
-        verts[i] = (verts[i] / 400.f - 1.f) * 1.5f;
-        verts[i + 1] = (verts[i + 1] / 300.f - 1.f) * 1.5f;
-    }
-
-    unsigned int vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-    unsigned int vb;
-    glGenBuffers(1, &vb);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vb);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void *)0);
-    glEnableVertexAttribArray(0);
-
+    glBindVertexArray(m_crosshair_vao);
     glUseProgram(m_ri.shaders["white"]);
     glDrawArrays(GL_LINES, 0, 4);
-
-    glDeleteVertexArrays(1, &vao);
-    glDeleteBuffers(1, &vb);
 }
 

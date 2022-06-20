@@ -31,5 +31,7 @@ private:
     Skybox m_skybox;
 
     float m_player_last_shot;
+
+    unsigned int m_crosshair_vao, m_crosshair_vb;
 };
 
