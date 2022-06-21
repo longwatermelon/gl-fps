@@ -33,10 +33,10 @@ Prog::Prog(GLFWwindow *w)
     // crosshair
     float verts[] = {
         // verts      colors
-        400.f, 305.f, 1.f, 0.f, 0.f,
-        400.f, 295.f, 0.f, 1.f, 1.f,
-        395.f, 300.f, 1.f, 0.f, 0.f,
-        405.f, 300.f, 0.f, 1.f, 1.f
+        400.f, 305.f, 1.f, 1.f, 1.f,
+        400.f, 295.f, 1.f, 1.f, 1.f,
+        395.f, 300.f, 1.f, 1.f, 1.f,
+        405.f, 300.f, 1.f, 1.f, 1.f
     };
 
     for (size_t i = 0; i < sizeof(verts) / sizeof(float); i += 5)
