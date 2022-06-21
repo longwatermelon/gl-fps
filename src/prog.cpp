@@ -193,7 +193,6 @@ void Prog::mainloop()
 void Prog::events()
 {
     float move = .2f;
-    float rot = 2.f;
 
     if (m_player.scoped())
         move *= .5f;
@@ -214,11 +213,6 @@ void Prog::events()
         if (m_player.vel().y == 0.f)
             m_player.set_vely(.3f);
     }
-
-    if (glfwGetKey(m_win, GLFW_KEY_LEFT) == GLFW_PRESS) m_player.rotate(glm::vec3(-rot, 0.f, 0.f));
-    if (glfwGetKey(m_win, GLFW_KEY_RIGHT) == GLFW_PRESS) m_player.rotate(glm::vec3(rot, 0.f, 0.f));
-    if (glfwGetKey(m_win, GLFW_KEY_UP) == GLFW_PRESS) m_player.rotate(glm::vec3(0.f, rot, 0.f));
-    if (glfwGetKey(m_win, GLFW_KEY_DOWN) == GLFW_PRESS) m_player.rotate(glm::vec3(0.f, -rot, 0.f));
 
     if (glfwGetMouseButton(m_win, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
     {
