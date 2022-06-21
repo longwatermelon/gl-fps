@@ -8,7 +8,7 @@ First person shooter
 * Left mouse button: shoot
 * Right mouse button: scope
 
-https://user-images.githubusercontent.com/73869536/174900245-94e88940-45eb-43a0-b0a1-93a7d330b317.mp4
+https://user-images.githubusercontent.com/73869536/174902304-8770bd75-b508-4811-8801-2516016d791e.mp4
 
 # Building
 ## Linux
