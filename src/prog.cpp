@@ -222,7 +222,7 @@ void Prog::events()
 
     if (glfwGetMouseButton(m_win, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
     {
-        if (glfwGetTime() - m_player_last_shot > .05f)
+        if (glfwGetTime() - m_player_last_shot > .5f)
         {
             m_player_last_shot = glfwGetTime();
             m_player.shoot_effects();
