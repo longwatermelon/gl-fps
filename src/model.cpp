@@ -1,5 +1,7 @@
 #include "model.h"
 #include <filesystem>
+#include <iostream>
+#include <glm/gtx/string_cast.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <assimp/Importer.hpp>

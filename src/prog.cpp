@@ -158,6 +158,8 @@ void Prog::mainloop()
         {
         }
 
+        m_solids[0].rotate(glm::vec3(.00f, 0.002f, .001f));
+
         glClearColor(0.f, 0.f, 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -220,7 +222,7 @@ void Prog::events()
 
     if (glfwGetMouseButton(m_win, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
     {
-        if (glfwGetTime() - m_player_last_shot > .5f)
+        if (glfwGetTime() - m_player_last_shot > .05f)
         {
             m_player_last_shot = glfwGetTime();
             m_player.shoot_effects();

@@ -82,12 +82,16 @@ float Mesh::shortest_dist(glm::vec3 p, glm::vec3 *norm) const
 {
     float t = INFINITY;
 
+    glm::quat yaw(glm::vec3(0.f, m_rot.y, 0.f));
+    glm::quat pitch(glm::vec3(0.f, 0.f, m_rot.z));
+    glm::quat quat = glm::normalize(yaw * pitch);
+
     for (size_t i = 0; i < m_indices.size(); i += 3)
     {
         std::array<glm::vec3, 3> pts = {
-            m_verts[m_indices[i]].pos,
-            m_verts[m_indices[i + 1]].pos,
-            m_verts[m_indices[i + 2]].pos
+            quat * m_verts[m_indices[i]].pos,
+            quat * m_verts[m_indices[i + 1]].pos,
+            quat * m_verts[m_indices[i + 2]].pos
         };
 
         glm::vec3 n;
